@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Sauna MM">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="icon" type="image/svg+xml" href="./sauna-rally-logo-3.svg">
+<link rel="apple-touch-icon" href="/logo.svg">
+<link rel="icon" type="image/svg+xml" href="./logo.svg">
 <style>
 .country-flag{display:inline-block;width:1.4em;height:1.05em;object-fit:contain;vertical-align:-.15em;border-radius:2px;flex-shrink:0}
 .country-picker{position:relative}.country-picker summary{cursor:pointer;padding:12px;background:#111;border:1px solid #333;border-radius:8px;list-style:none}.country-picker summary::after{content:'▾';float:right}
@@ -145,7 +145,7 @@
 <body>
 
 <div id="loading" style="display: none;">
-  <img class="logo logo-large" src="./sauna-rally-logo-3.svg" alt="WRC Sauna MM logo">
+  <img class="logo logo-large" src="./logo.svg" alt="WRC Sauna MM logo">
   <div class="spinner"></div>
   <div class="loading-text" id="loadingText">Ühendun...</div>
   <button id="skipBtn" onclick="skipLoading()" style="display:none;margin-top:8px;background:none;border:1px solid #333;border-radius:8px;color:#888;padding:8px 16px;cursor:pointer;font-size:12px">Jätka ilma ühenduseta</button>
@@ -370,7 +370,7 @@ onValue(dataRef, snap => {
 
 onValue(ref(db, ".info/connected"), snap => setStatus(snap.val() === true));
 
-// ── Toast ─────────────────────────────────────────────────────
+// ── Toast ─────────────────────────────────────────────────────────
 function showToast(msg, isError, type="") {
   let t = document.getElementById("toast");
   if (!t) { t = document.createElement("div"); t.id = "toast"; document.body.appendChild(t); }
@@ -388,8 +388,8 @@ function initials(n){return n.split(" ").map(w=>w[0]).join("").toUpperCase().sli
 function avatar(n,sz,ci){const bg=AV_COLORS[ci%AV_COLORS.length];return`<div class="avatar" style="width:${sz}px;height:${sz}px;background:${bg};font-size:${Math.round(sz*0.35)}px">${initials(n)}</div>`;}
 function driverIdx(n){return state.drivers.findIndex(d=>d.name===n);}
 function jsQuote(v){return JSON.stringify(String(v??""));}
-function escapeAttr(v){return String(v??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
-function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function escapeAttr(v){return String(v??"").replace(/&/g,"&").replace(/"/g,""").replace(/</g,"<");}
+function escapeHtml(v){return String(v??"").replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">");}
 function normalizeSearchText(v){return String(v??"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function todayInputValue(){const now=new Date();const local=new Date(now.getTime()-now.getTimezoneOffset()*60000);return local.toISOString().slice(0,10);}
 function normalizeStoredDate(dateValue,fallbackId){
@@ -980,7 +980,7 @@ function renderCountryHistoryRows(country){
   }).join("")}</div>`;
 }
 
-// ── New Race ──────────────────────────────────────────────────
+// ── New Race ───────────────────────────────────────────────────
 function renderNewRace(){
   if(!canEdit() && editingRaceId===null){document.getElementById("tab-new-race").innerHTML="<div class=warning-box>Uue võistluse lisamiseks logi sisse.</div>";return;}
   const el=document.getElementById("tab-new-race");
@@ -990,7 +990,7 @@ function renderNewRace(){
     const stages=getStageOptions(window.raceCountry);
     if(!stages.includes(raceStage))raceStage=stages[0];
     const stageOpts=stages.map(stage=>`<option value="${escapeAttr(stage)}"${stage===raceStage?" selected":""}>${escapeHtml(stage)}</option>`).join("");
-    const rows=state.drivers.map((d,i)=>{const sel=raceParticipants.includes(d.name);return`<div class="driver-row${sel?" selected":""}" data-dname="${d.name.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}">${avatar(d.name,30,i)}<span style="flex:1;font-size:14px;font-weight:600;pointer-events:none">${d.name}</span>${sel?`<span style="color:#E3051B;font-size:18px;pointer-events:none">✓</span>`:""}</div>`;}).join("");
+    const rows=state.drivers.map((d,i)=>{const sel=raceParticipants.includes(d.name);return`<div class="driver-row${sel?" selected":""}" data-dname="${d.name.replace(/&/g,"&").replace(/"/g,""")}">${avatar(d.name,30,i)}<span style="flex:1;font-size:14px;font-weight:600;pointer-events:none">${d.name}</span>${sel?`<span style="color:#E3051B;font-size:18px;pointer-events:none">✓</span>`:""}</div>`;}).join("");
     const modeHelp=raceMode==="history"?"Sisesta juba sõidetud etapp koos päris toimumiskuupäevaga.":"Kasuta seda vaadet nii live võistluse kui ka sama päeva sisestuse jaoks.";
     el.innerHTML=`<div style="margin-bottom:14px"><div class="section-label">Sisestuse tüüp</div><div class="mode-switch"><button class="mode-btn${raceMode==="live"?" active":""}" data-mode="live" type="button">Live / uus</button><button class="mode-btn${raceMode==="history"?" active":""}" data-mode="history" type="button">Varasem võistlus</button></div><div class="helper-note">${modeHelp}</div></div><div class="form-grid"><div><div class="section-label">Riik / etapp</div><select id="csel" hidden>${opts}</select>${countryPickerHtml()}</div><div><div class="section-label">Pikem katse</div><select id="stageSel">${stageOpts}</select></div><div><div class="section-label">${raceMode==="history"?"Toimumiskuupäev":"Kuupäev"}</div><input id="raceDateInput" type="date" value="${raceDate}"></div></div><div id="plist" style="margin-bottom:14px"><div class="section-label">Osalejad</div>${rows}</div><button id="nsbtn" class="btn-red btn-red-full"${raceParticipants.length<2||!raceDate?" disabled":""}>${raceMode==="history"?"Sisesta ajaloolised tulemused →":"Sisesta tulemused →"}</button>`;
     document.querySelectorAll('[data-country]').forEach(button=>button.addEventListener('click',()=>{const select=document.getElementById('csel');select.value=button.dataset.country;select.dispatchEvent(new Event('change'));}));
@@ -1237,4 +1237,5 @@ window.addEventListener('appinstalled',()=>{
 
 
 </body></html>
+
 
