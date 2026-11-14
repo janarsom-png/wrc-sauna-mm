@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "wrc-sauna-mm": {
+      ".read": true,
+      ".write": "auth != null && auth.uid === 'GJ0yC9A8xGbmhlo7wPc4D6VrDGt1'",
+      "races": {
+        "$race": {
+          ".write": "auth != null && auth.uid === 'ZWKxzXYOUAV35pzUIcSjdsKjSfw1' && !data.exists() && newData.exists() && newData.hasChildren(['id', 'country', 'date', 'results'])",
+          "results": {
+            ".write": "auth != null && auth.uid === 'ZWKxzXYOUAV35pzUIcSjdsKjSfw1' && data.parent().exists() && newData.exists()",
+            ".validate": "newData.hasChildren()"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///Users/janarsommer/Downloads/wrc-sauna-mm_1.html -->
+<html lang="et"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WRC SAUNA MM</title>
+<link rel="icon" type="image/svg+xml" href="./sauna-rally-logo-3.svg">
+<style>
+.country-flag{display:inline-block;width:1.4em;height:1.05em;object-fit:contain;vertical-align:-.15em;border-radius:2px;flex-shrink:0}
+.country-picker{position:relative}.country-picker summary{cursor:pointer;padding:12px;background:#111;border:1px solid #333;border-radius:8px;list-style:none}.country-picker summary::after{content:'▾';float:right}
+.country-options{position:absolute;z-index:20;top:100%;left:0;right:0;max-height:320px;overflow:auto;background:#181818;border:1px solid #444;border-radius:8px;padding:4px}
+.country-options button{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border:0;background:transparent;color:#eee;text-align:left;cursor:pointer}.country-options button:hover,.country-options button:focus-visible{background:#333}
+
+[hidden]{display:none!important}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--red:#E3051B;--bg:#0E0E0F;--card:#1A1A1C;--border:#2E2E30;--text:#F0F0F0;--muted:#888;--rally-navy:#00467F;--rally-cyan:#42C4DD;--rally-gold:#FFC425}
+  body{background:var(--bg);background-image:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,0.018) 18px,rgba(255,255,255,0.018) 20px);min-height:100vh;font-family:system-ui,-apple-system,sans-serif;color:var(--text);padding-bottom:2rem}
+  .status-dot{width:clamp(7px,1.35vw,18px);height:clamp(7px,1.35vw,18px);border-radius:50%;display:inline-block;margin-right:clamp(5px,.7vw,12px);background:#888;box-shadow:0 0 0 3px rgba(136,136,136,.1)}
+  .status-dot.online{background:#2ECC71;box-shadow:0 0 12px rgba(46,204,113,.8)}.status-dot.offline{background:#E3051B;box-shadow:0 0 12px rgba(227,5,27,.7)}
+  .header{position:relative;isolation:isolate;overflow:hidden;height:clamp(140px,38vw,360px);background:#030508 url('./wrc-sauna-hero-clean.png') center/cover no-repeat;border-bottom:3px solid var(--red);margin-bottom:14px;box-shadow:0 16px 40px rgba(0,0,0,.48)}
+  .header::before{content:"";position:absolute;z-index:0;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03) 60%,rgba(0,0,0,.22));pointer-events:none}
+  .header::after{content:"";position:absolute;z-index:1;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--red) 14% 86%,transparent);box-shadow:0 0 18px rgba(227,5,27,.9);pointer-events:none}
+  .header-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .logo{width:40px;height:40px;display:block;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35))}
+  .logo-large{width:60px;height:60px}
+  .header-sub{position:absolute;z-index:2;left:27.2%;top:54%;display:flex;align-items:center;width:34%;min-height:25%;padding:clamp(4px,.6vw,10px) clamp(7px,1vw,16px);background:linear-gradient(90deg,#020508 0 88%,rgba(2,5,8,.9));border-radius:6px;color:#fff;font-size:clamp(9px,1.45vw,21px);font-weight:600;letter-spacing:.35px;white-space:nowrap;text-shadow:0 2px 8px #000}
+  .header-right{position:absolute;z-index:2;right:4.8%;top:29%;width:17.5%;height:40%;display:flex;align-items:stretch}
+  .race-count{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8%;background:linear-gradient(150deg,rgba(18,6,9,.98),rgba(25,3,8,.97));border:1px solid rgba(255,65,78,.55);clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);box-shadow:inset 10px 0 24px rgba(227,5,27,.13)}
+  .race-count::before{content:"";position:absolute;left:8%;top:-5%;bottom:-5%;width:2px;background:#ff2338;transform:skewX(-13deg);box-shadow:0 0 13px #ff2338}
+  .race-count-label{font-size:clamp(7px,1.25vw,18px);font-weight:800;color:#fff;letter-spacing:clamp(.5px,.16vw,2px);text-transform:uppercase}
+  .race-count-num{font-size:clamp(23px,5vw,74px);font-weight:950;color:#f01425;font-family:monospace;line-height:1;text-shadow:0 0 22px rgba(227,5,27,.55)}
+  .main{max-width:620px;margin:0 auto;padding:0 12px}
+  body.viewer-tab-active .main{max-width:1200px}
+  .tabs{display:flex;gap:2px;margin-bottom:14px;background:#111113;border:1px solid var(--border);border-radius:10px;padding:3px}
+  .tab-btn{flex:1;padding:7px 2px;border:none;cursor:pointer;border-radius:8px;font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;background:transparent;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
+  .tab-btn.active{background:var(--red);color:#fff}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px}
+  .card-empty{padding:3rem;text-align:center;color:var(--muted);font-size:14px}
+  input,select{background:#111113;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 12px;font-size:14px;outline:none;width:100%;font-family:inherit}
+  input:focus,select:focus{border-color:var(--red)}
+  input::placeholder{color:var(--muted)}
+  select option{background:#111113}
+  .btn-red{background:var(--red);color:#fff;border:none;border-radius:8px;padding:10px 18px;cursor:pointer;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+  .btn-red:disabled{background:#333;color:var(--muted);cursor:default}
+  .btn-red-full{width:100%;padding:12px}
+  .btn-icon{background:none;border:1px solid var(--border);border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:15px}
+  .btn-icon:hover:not(:disabled){border-color:var(--red);color:var(--red)}
+  .btn-icon:disabled{opacity:0.2;cursor:default}
+  .section-label{font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+  .form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .mode-switch{display:flex;gap:6px;padding:4px;background:#111113;border:1px solid var(--border);border-radius:10px}
+  .mode-btn{flex:1;border:none;border-radius:8px;padding:10px 12px;background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-weight:800;letter-spacing:0.4px}
+  .mode-btn.active{background:var(--red);color:#fff}
+  .helper-note{font-size:11px;color:var(--muted);line-height:1.4;margin-top:6px}
+  .warning-box{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-left:4px solid #F5A623;border-radius:8px;padding:10px 14px;margin-bottom:12px;color:#F5A623;font-size:13px}
+  .footer-note{font-size:10px;color:#444;margin-top:6px;text-align:center;letter-spacing:1px;text-transform:uppercase}
+  .avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:'Courier New',monospace;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.1);text-transform:uppercase}
+  .driver-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;background:var(--card);border:1px solid var(--border);border-left:4px solid transparent;margin-bottom:6px}
+  .driver-row.selected{background:rgba(227,5,27,0.1);border-color:var(--red);border-left-color:var(--red)}
+  .standing-row{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:6px;background:var(--card);border:1px solid var(--border);border-left:4px solid #333;border-radius:10px}
+  .standing-row.clickable{cursor:pointer;transition:transform 0.15s ease,border-color 0.15s ease,box-shadow 0.15s ease}
+  .standing-row.clickable:hover{transform:translateY(-1px);border-color:rgba(227,5,27,0.35);box-shadow:0 10px 24px rgba(0,0,0,0.2)}
+  .standing-row.first{background:rgba(227,5,27,0.10);border-color:var(--red);border-left-color:var(--red)}
+  .standing-row.second{border-left-color:#aaa}
+  .standing-row.third{border-left-color:#cd7f32}
+  .loser-tag{display:inline-flex;align-items:center;margin-left:8px;padding:2px 7px;border-radius:999px;border:1px solid rgba(227,5,27,0.35);background:rgba(227,5,27,0.12);color:#ff8b98;font-size:10px;font-weight:900;letter-spacing:0.7px;text-transform:uppercase;vertical-align:middle}
+  .loser-tag.special{border-color:rgba(245,166,35,.7);background:linear-gradient(135deg,rgba(245,166,35,.22),rgba(227,5,27,.16));color:#ffd27a;box-shadow:0 0 14px rgba(245,166,35,.16)}
+  .finish-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:var(--card);border:1px solid var(--border);border-left:4px solid #333;margin-bottom:6px}
+  .finish-row.winner{background:rgba(227,5,27,0.12);border-color:var(--red);border-left-color:var(--red)}
+  .finish-row.dnf{border-left-color:#F5A623;opacity:0.88}
+  .dnf-btn{min-width:54px;font-size:10px;font-weight:900;letter-spacing:0.5px}
+  .dnf-btn.active{border-color:#F5A623;background:rgba(245,166,35,0.14);color:#F5A623}
+  .history-card{margin-bottom:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .history-header{padding:10px 14px;display:flex;align-items:center;gap:10px;background:#111113;border-bottom:2px solid var(--red)}
+  .history-body{background:var(--card);padding:6px 14px}
+  .history-result{display:flex;align-items:center;gap:8px;padding:6px 0}
+  .record-list{display:grid;gap:8px;margin-bottom:14px}
+  .record-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#111113;border:1px solid var(--border);border-radius:10px}
+  .record-row.clickable{cursor:pointer;transition:border-color 0.15s ease,transform 0.15s ease,box-shadow 0.15s ease}
+  .record-row.clickable:hover{transform:translateY(-1px);border-color:rgba(227,5,27,0.35);box-shadow:0 10px 24px rgba(0,0,0,0.2)}
+  .record-meta{font-size:10px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase}
+  .record-time{font-size:18px;font-weight:900;color:var(--red);font-family:monospace;line-height:1}
+  .finish-stack{flex:1;min-width:0}
+  .time-input{margin-top:8px;font-family:monospace;font-size:13px}
+  .time-input.invalid{border-color:#F5A623;color:#F5A623}
+  .time-hint{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:10px}
+  .viewer-shell{background:#111113;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.25)}
+  .viewer-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(227,5,27,0.1),rgba(17,17,19,0.95))}
+  .viewer-title{font-size:15px;font-weight:800;letter-spacing:0.4px}
+  .viewer-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .btn-muted{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#1A1A1C;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;text-decoration:none;cursor:pointer}
+  .btn-muted:hover{border-color:var(--red);color:#fff}
+  .account-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  #accountStatus{font-weight:700}
+  .temporary-notice{display:inline-flex;align-items:center;padding:7px 11px;border:1px solid rgba(227,5,27,.5);border-radius:999px;background:rgba(227,5,27,.14);color:#ff8793;font-size:12px;font-weight:900;letter-spacing:.35px}
+  .viewer-frame{display:block;width:100%;height:78vh;min-height:760px;border:0;background:#fff}
+  .viewer-hint{padding:12px 16px;background:#0E0E0F;color:var(--muted);font-size:12px;line-height:1.5}
+  .modal-overlay{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;padding:18px;background:rgba(0,0,0,0.74);backdrop-filter:blur(4px);z-index:500}
+  .modal-card{width:min(760px,100%);max-height:86vh;overflow:auto;background:#111113;border:1px solid var(--border);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,0.45)}
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(227,5,27,0.1),rgba(17,17,19,0.96))}
+  .modal-title{font-size:18px;font-weight:900;letter-spacing:0.3px}
+  .modal-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+  .modal-body{padding:18px}
+  .detail-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .detail-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px}
+  .detail-stat-value{font-size:24px;font-weight:900;color:var(--red);font-family:monospace;line-height:1}
+  .detail-stat-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+  .detail-sections{display:grid;gap:14px}
+  .detail-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+  .detail-list{display:grid;gap:8px}
+  .detail-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #2E2E30}
+  .detail-row:last-child{border-bottom:none;padding-bottom:0}
+  .detail-row:first-child{padding-top:0}
+  .detail-row.clickable{cursor:pointer}
+  .detail-name{font-size:14px;font-weight:700}
+  .detail-meta{font-size:10px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-top:3px;line-height:1.4}
+  .detail-value{font-size:13px;font-weight:900;color:var(--text);font-family:monospace;white-space:nowrap}
+  .detail-empty{font-size:12px;color:var(--muted);line-height:1.5}
+  .detail-history{margin-top:10px;padding-top:10px;border-top:1px solid #2E2E30;display:grid;gap:8px}
+  .detail-history-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;background:#111113;border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+  .detail-history-title{font-size:13px;font-weight:700}
+  .detail-history-meta{font-size:10px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;line-height:1.4;margin-top:3px}
+  .detail-pill{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(227,5,27,0.28);background:rgba(227,5,27,0.08);color:#F0F0F0;border-radius:999px;padding:2px 8px;font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase}
+  body.modal-open{overflow:hidden}
+  .app-footer{max-width:620px;margin:18px auto 0;padding:0 12px}
+  .footer-banner{position:relative;background:#111113;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,0.28)}
+  .footer-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.18),rgba(0,0,0,0.34));pointer-events:none}
+  .footer-banner img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:brightness(0.58) saturate(0.82) contrast(0.92);transform:scale(1.01)}
+  .footer-caption{padding:10px 12px;background:linear-gradient(180deg,rgba(227,5,27,0.08),rgba(0,0,0,0));font-size:11px;color:var(--muted);letter-spacing:0.6px;text-transform:uppercase;text-align:center}
+  #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200}
+  .spinner{width:40px;height:40px;border:3px solid #333;border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text{color:var(--muted);font-size:13px;letter-spacing:1px;text-transform:uppercase}
+  @media(max-width:700px){.viewer-toolbar{flex-direction:row;align-items:center}.viewer-frame{height:70vh;min-height:620px}.detail-summary{grid-template-columns:1fr}.modal-overlay{padding:12px}}
+  @media(max-width:480px){.header-sub{left:26.5%;top:54%;width:37%;min-height:25%;padding:4px 6px;font-size:8px}.header-right{right:3.7%;top:22%;width:19.5%;height:55%}.race-count-label{font-size:7px}.race-count-num{font-size:clamp(22px,8vw,34px)}.tab-btn{font-size:9px}.form-grid{grid-template-columns:1fr}.record-row{align-items:flex-start}.detail-row{flex-direction:column}.detail-value{white-space:normal}.detail-history-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div id="loading" style="display: none;">
+  <img class="logo logo-large" src="./sauna-rally-logo-3.svg" alt="WRC Sauna MM logo">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Ühendun...</div>
+  <button id="skipBtn" onclick="skipLoading()" style="display:none;margin-top:8px;background:none;border:1px solid #333;border-radius:8px;color:#888;padding:8px 16px;cursor:pointer;font-size:12px">Jätka ilma ühenduseta</button>
+</div>
+
+<div class="header">
+  <h1 class="header-accessible-title">WRC Sauna MM · Sauna Rally Championship</h1>
+  <div class="header-sub" hidden aria-hidden="true"><span class="status-dot online" id="statusDot"></span><span id="statusText">Ühendatud · live</span></div>
+  <div class="header-right">
+    <div id="raceCountDisplay" class="race-count" style="display: block;">
+      <div class="race-count-label">Etappe</div>
+      <div class="race-count-num" id="raceCountNum">7</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+<section class="card" style="padding:16px;margin-bottom:16px" aria-label="Sisselogimine">
+<div class="account-row"><p id="accountStatus" role="status">Sisselogimise kontroll…</p><span id="temporaryNotice" class="temporary-notice" hidden>Mäge on munn</span><button id="logoutButton" class="btn-muted" hidden>Logi välja</button></div>
+<form id="loginForm" style="display:flex;flex-wrap:wrap;gap:8px">
+<input type="email" id="loginEmail" placeholder="E-post" aria-label="E-post" autocomplete="username" required>
+<input type="password" id="loginPassword" placeholder="Parool" aria-label="Parool" autocomplete="current-password" required>
+<button class="btn-red" type="submit">Logi sisse</button></form>
+<p id="loginError" role="alert"></p></section>
+  <div class="tabs">
+    <button class="tab-btn" data-tab="leaderboard" onclick="switchTab(&#39;leaderboard&#39;)"><span style="font-size:18px">🏆</span>Edetabel</button>
+    <button class="tab-btn" data-tab="season-2025" onclick="switchTab(&#39;season-2025&#39;)"><span style="font-size:18px">👑</span>2025</button>
+    <button class="tab-btn" data-tab="sauna-league" onclick="switchTab(&#39;sauna-league&#39;)"><span style="font-size:18px">🧖</span>Sauna liiga</button>
+    <button class="tab-btn active" data-tab="new-race" onclick="switchTab(&#39;new-race&#39;)"><span style="font-size:18px">🏁</span>Lisa võistlus</button>
+    <button class="tab-btn" data-tab="history" onclick="switchTab(&#39;history&#39;)"><span style="font-size:18px">📋</span>Ajalugu</button>
+    <button class="tab-btn" data-tab="drivers" onclick="switchTab(&#39;drivers&#39;)"><span style="font-size:18px">🎮</span>Sõitjad</button>
+  </div>
+  <div id="tab-leaderboard" class="tab-content" style="display: none;"><div class="standing-row first">
+      <div style="width:30px;text-align:center;font-size:18px;color:#888;font-weight:900;font-family:monospace">🏆</div>
+      <div class="avatar" style="width:36px;height:36px;background:#2E7D32;font-size:13px">S</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Sommer</div><div style="font-size:11px;color:#888;margin-top:1px">6 võistlust · 4 võitu</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:#E3051B;font-family:monospace;line-height:1">4</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu</div></div>
+    </div><div class="standing-row second">
+      <div style="width:30px;text-align:center;font-size:18px;color:#888;font-weight:900;font-family:monospace">🥈</div>
+      <div class="avatar" style="width:36px;height:36px;background:#E65100;font-size:13px">M</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Mäge</div><div style="font-size:11px;color:#888;margin-top:1px">4 võistlust · 3 võitu</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:#F0F0F0;font-family:monospace;line-height:1">3</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu</div></div>
+    </div><div class="standing-row ">
+      <div style="width:30px;text-align:center;font-size:13px;color:#888;font-weight:900;font-family:monospace">3</div>
+      <div class="avatar" style="width:36px;height:36px;background:#1565C0;font-size:13px">P</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Pehka</div><div style="font-size:11px;color:#888;margin-top:1px">4 võistlust · 0 võitu</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:#F0F0F0;font-family:monospace;line-height:1">0</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu</div></div>
+    </div><div class="standing-row ">
+      <div style="width:30px;text-align:center;font-size:13px;color:#888;font-weight:900;font-family:monospace">4</div>
+      <div class="avatar" style="width:36px;height:36px;background:#E3051B;font-size:13px">I</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Ints</div><div style="font-size:11px;color:#888;margin-top:1px">0 võistlust · 0 võitu</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:#F0F0F0;font-family:monospace;line-height:1">0</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu</div></div>
+    </div><div class="standing-row ">
+      <div style="width:30px;text-align:center;font-size:13px;color:#888;font-weight:900;font-family:monospace">5</div>
+      <div class="avatar" style="width:36px;height:36px;background:#6A1B9A;font-size:13px">J</div>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">Jürx</div><div style="font-size:11px;color:#888;margin-top:1px">0 võistlust · 0 võitu</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:#F0F0F0;font-family:monospace;line-height:1">0</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu</div></div>
+    </div><div class="footer-note">Ainult võitja saab punkti · uueneb automaatselt</div></div>
+  <div id="tab-season-2025" class="tab-content" style="display:none"></div>
+  <div id="tab-sauna-league" class="tab-content" style="display:none"></div>
+  <div id="tab-new-race" class="tab-content" style="display: block;"></div>
+  <div id="tab-history" class="tab-content" style="display:none"></div>
+  <div id="tab-drivers" class="tab-content" style="display:none"></div>
+</div>
+
+<div class="app-footer">
+  <div class="footer-banner">
+    <img src="./footer-wrc-2026.jpeg" alt="WRC hooaja 2026 pilt">
+    <div class="footer-caption">WRC hooaja 2026 jalus</div>
+  </div>
+</div>
+
+<div id="driverModal" class="modal-overlay" onclick="closeDriverStats()"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, set, onDisconnect } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-database.js";
+
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+const firebaseConfig = {
+  apiKey:            "AIzaSyAl-m4UVJRf3QwIrn_k3zv92whI-Asf_Wg",
+  authDomain:        "wrc-mm.firebaseapp.com",
+  databaseURL:       "https://wrc-mm-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:         "wrc-mm",
+  storageBucket:     "wrc-mm.firebasestorage.app",
+  messagingSenderId: "271276012801",
+  appId:             "1:271276012801:web:e6c7c893e04c0fd1b45700"
+};
+
+// Näita 4 sek pärast nuppu kui ühendust ei teki
+setTimeout(() => {
+  if (document.getElementById('loading').style.display !== 'none') {
+    document.getElementById('loadingText').textContent = 'Ühendus võtab kaua...';
+    document.getElementById('skipBtn').style.display = 'block';
+  }
+}, 4000);
+
+window.skipLoading = function() {
+  document.getElementById('loading').style.display = 'none';
+  setStatus(false);
+  renderAll();
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+const auth = getAuth(app);
+const ADMIN_UID="GJ0yC9A8xGbmhlo7wPc4D6VrDGt1", EDITOR_UID="ZWKxzXYOUAV35pzUIcSjdsKjSfw1";
+const USER_NAMES={
+ [ADMIN_UID]:"Janar",
+ [EDITOR_UID]:"Martin"
+};
+const isAdmin=()=>auth.currentUser?.uid===ADMIN_UID;
+const canEdit=()=>isAdmin()||auth.currentUser?.uid===EDITOR_UID;
+const getUserName=user=>USER_NAMES[user?.uid]||user?.displayName||user?.email?.split("@")[0]||"Kasutaja";
+let savedState={drivers:[],races:[]};
+let saving=false;
+document.getElementById('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault(); const b=e.target.querySelector('button'); b.disabled=true;
+ document.getElementById('loginError').textContent='';
+ try { await signInWithEmailAndPassword(auth,document.getElementById('loginEmail').value.trim(),document.getElementById('loginPassword').value); document.getElementById('loginPassword').value=''; }
+ catch { document.getElementById('loginError').textContent='Sisselogimine ebaõnnestus. Kontrolli e-posti ja parooli.'; }
+ finally { b.disabled=false; }
+});
+document.getElementById('logoutButton').addEventListener('click',()=>signOut(auth));
+onAuthStateChanged(auth,user=>{
+ document.getElementById('loginForm').hidden=!!user;
+ document.getElementById('loginForm').style.display=user?'none':'flex';
+ document.getElementById('logoutButton').hidden=!user;
+ document.getElementById('temporaryNotice').hidden=!user;
+ document.getElementById('accountStatus').textContent=user ? getUserName(user)+' · '+(isAdmin()?'Admin':canEdit()?'Võistluste ja tulemuste muutja':'Vaataja') : 'Vaataja · tulemuste muutmiseks logi sisse';
+ resetRaceDraft(); renderAll();
+});
+const dataRef = ref(db, "wrc-sauna-mm");
+const SAUNA_LEAGUE_URL = "https://wrcfan.com/leagues/cH7wG7QV5trKvZsVcbmI";
+const FEATURED_SEASON_YEAR = 2025;
+
+const COUNTRIES=[{n:"Monte Carlo",f:"🇲🇨"},{n:"Rootsi",f:"🇸🇪"},{n:"Horvaatia",f:"🇭🇷"},{n:"Portugal",f:"🇵🇹"},{n:"Keenia",f:"🇰🇪"},{n:"Itaalia",f:"🇮🇹"},{n:"Soome",f:"🇫🇮"},{n:"Belgia",f:"🇧🇪"},{n:"Kreeka",f:"🇬🇷"},{n:"Uus-Meremaa",f:"🇳🇿"},{n:"Hispaania",f:"🇪🇸"},{n:"Jaapan",f:"🇯🇵"},{n:"Eesti",f:"🇪🇪"},{n:"Wales",f:"🏴󠁧󠁢󠁷󠁬󠁳󠁿"},{n:"Saksamaa",f:"🇩🇪"},{n:"Argentiina",f:"🇦🇷"},{n:"Türgi",f:"🇹🇷"},{n:"Tšiili",f:"🇨🇱"}];
+const STAGE_OPTIONS={
+  "Monte Carlo":["Luceram","Luceram reverse"],
+  "Rootsi":["Sävar","Sävar reverse"],
+  "Horvaatia":["Rude","Rude reverse"],
+  "Portugal":["Felgueiras","Felgueiras reverse"],
+  "Keenia":["Seyabei","Seyabei reverse"],
+  "Itaalia":["Monti di Ala","Monti di Ala reverse"],
+  "Soome":["Pihlajakoski","Pihlajakoski reverse"],
+  "Belgia":["ZonneBeke","ZonneBeke reverse"],
+  "Kreeka":["Psatha","Psatha reverse"],
+  "Uus-Meremaa":["Te Hutewai","Te Hutewai reverse"],
+  "Hispaania":["Savalla","Savalla reverse"],
+  "Jaapan":["Shitara","Shitara reverse"],
+  "Eesti":["Otepää","Otepää reverse"],
+  "Wales":["Hafren","Hafren reverse"],
+  "Saksamaa":["Moselland","Moselland reverse"],
+  "Argentiina":["El Condor","El Condor reverse"],
+  "Türgi":["Yesilbelde","Yesilbelde reverse"],
+  "Tšiili":["Pelun","Pelun reverse"],
+  "Tziili":["Pelun","Pelun reverse"],
+  "Monte-Carlo":["Luceram","Luceram reverse"]
+};
+COUNTRIES.push({n:"Mehhiko",f:"🇲🇽"});
+STAGE_OPTIONS["Mehhiko"]=["Media Luna","Media Luna reverse"];
+const AV_COLORS=["#E3051B","#1565C0","#2E7D32","#6A1B9A","#E65100","#00695C","#AD1457","#37474F"];
+
+let state={drivers:[],races:[]};
+let raceParticipants=[],raceFinish=[],raceStep=1,currentTab="new-race";
+let raceMode="live";
+let raceDate=todayInputValue();
+let raceTimes={};
+let raceDnfs={};
+let liveRecordTimer=null;
+let lastLiveRecordNotice="";
+let editingRaceId=null;
+let activeDriverDetail=null;
+let headToHeadA="";
+let headToHeadB="";
+let historySearch="";
+let activeHistoryCountry="";
+window.raceCountry=COUNTRIES[0].n;
+let raceStage=(STAGE_OPTIONS[COUNTRIES[0].n]||["Pikim katse"])[0];
+
+// ── Firebase ─────────────────────────────────────────────────
+async function saveToDb() {
+  if(saving||!canEdit()){showToast('Muutmiseks logi sisse lubatud kontoga.',true);return false;}
+  saving=true;
+  try {
+    if(isAdmin()) await set(dataRef,{drivers:state.drivers,races:state.races});
+    else {
+      const changes=state.races.map((race,i)=>({race,i})).filter(({race,i})=>JSON.stringify(race)!==JSON.stringify(savedState.races[i]));
+      if(state.races.length===savedState.races.length&&changes.length===0)return true;
+      const isNewRace=state.races.length===savedState.races.length+1&&changes.length===1&&changes[0].i===savedState.races.length;
+      if(isNewRace){
+        const {race,i}=changes[0];
+        await set(ref(db,'wrc-sauna-mm/races/'+i),race);
+      }else{
+        if(state.races.length!==savedState.races.length||changes.length!==1) throw new Error('Only one existing result may change');
+        const {race,i}=changes[0]; const before=savedState.races[i];
+        if(race.id!==before.id) throw new Error('Race changed');
+        await set(ref(db,'wrc-sauna-mm/races/'+i+'/results'),race.results);
+      }
+    }
+    showToast('✓ Salvestatud',false); return true;
+  } catch(err) {
+    state=structuredClone(savedState); renderAll();
+    showToast('Salvestamine ebaõnnestus. Andmed taastati.',true); return false;
+  } finally {saving=false;}
+}
+
+let isFirstLoad = true;
+onValue(dataRef, snap => {
+  const d = snap.val();
+  state={drivers:d?.drivers||[],races:d?.races||[]}; savedState=structuredClone(state);
+  document.getElementById("loading").style.display = "none";
+  setStatus(true);
+  renderAll();
+  isFirstLoad = false;
+}, err => {
+  console.error(err);
+  document.getElementById("loading").style.display = "none";
+  setStatus(false);
+  renderAll();
+});
+
+onValue(ref(db, ".info/connected"), snap => setStatus(snap.val() === true));
+
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg, isError, type="") {
+  let t = document.getElementById("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; document.body.appendChild(t); }
+  t.textContent = msg;
+  const background=type==="record"?"linear-gradient(135deg,#F5A623,#E3051B)":isError?"#c0392b":"#27ae60";
+  t.style.cssText = `position:fixed;bottom:24px;left:50%;width:max-content;max-width:calc(100vw - 24px);transform:translateX(-50%);background:${background};color:#fff;padding:${type==="record"?"13px 20px":"10px 20px"};border:${type==="record"?"1px solid rgba(255,255,255,.28)":"none"};border-radius:10px;font-size:13px;font-weight:800;line-height:1.35;text-align:center;box-shadow:${type==="record"?"0 12px 36px rgba(227,5,27,.42)":"0 8px 24px rgba(0,0,0,.28)"};z-index:999;transition:opacity 0.3s`;
+  t.style.opacity = "1";
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = "0"; }, type==="record"?4200:2500);
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function setStatus(on){document.getElementById("statusDot").className="status-dot "+(on?"online":"offline");document.getElementById("statusText").textContent=on?"Ühendatud · live":"Ühenduseta";}
+function initials(n){return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);}
+function avatar(n,sz,ci){const bg=AV_COLORS[ci%AV_COLORS.length];return`<div class="avatar" style="width:${sz}px;height:${sz}px;background:${bg};font-size:${Math.round(sz*0.35)}px">${initials(n)}</div>`;}
+function driverIdx(n){return state.drivers.findIndex(d=>d.name===n);}
+function jsQuote(v){return JSON.stringify(String(v??""));}
+function escapeAttr(v){return String(v??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function normalizeSearchText(v){return String(v??"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function todayInputValue(){const now=new Date();const local=new Date(now.getTime()-now.getTimezoneOffset()*60000);return local.toISOString().slice(0,10);}
+function normalizeStoredDate(dateValue,fallbackId){
+  if(typeof dateValue==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(dateValue))return dateValue;
+  if(typeof dateValue==="string"){
+    const match=dateValue.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if(match)return`${match[3]}-${match[2].padStart(2,"0")}-${match[1].padStart(2,"0")}`;
+  }
+  if(fallbackId){
+    const dt=new Date(fallbackId);
+    if(!Number.isNaN(dt.getTime()))return new Date(dt.getTime()-dt.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  }
+  return todayInputValue();
+}
+function formatRaceDate(dateValue,fallbackId){
+  const normalized=normalizeStoredDate(dateValue,fallbackId);
+  const [year,month,day]=normalized.split("-");
+  return`${day}.${month}.${year}`;
+}
+function autoFormatRaceTimeInput(raw){
+  const value=String(raw??"").trim();
+  if(!value)return"";
+  const digits=value.replace(/\D/g,"");
+  if(!digits)return"";
+  if(digits.length<=3)return digits;
+  if(digits.length<=5){
+    const seconds=digits.slice(0,-3).replace(/^0+(?=\d)/,"");
+    return`${seconds||"0"}.${digits.slice(-3)}`;
+  }
+  if(digits.length<=7){
+    const minutes=digits.slice(0,-5).replace(/^0+(?=\d)/,"");
+    return`${minutes||"0"}:${digits.slice(-5,-3)}.${digits.slice(-3)}`;
+  }
+  const hours=digits.slice(0,-7).replace(/^0+(?=\d)/,"");
+  return`${hours||"0"}:${digits.slice(-7,-5)}:${digits.slice(-5,-3)}.${digits.slice(-3)}`;
+}
+function parseRaceTime(raw){
+  const rawValue=String(raw??"").trim().replace(/,/g,".");
+  const digitsOnly=/^\d+$/.test(rawValue);
+  if(digitsOnly&&rawValue.length<4)return null;
+  const value=autoFormatRaceTimeInput(rawValue);
+  if(!value)return null;
+  if(!/^\d+(?::\d{1,2}){0,2}(?:\.\d{1,3})?$/.test(value))return null;
+  const parts=value.split(":");
+  const secondsPart=Number(parts.pop());
+  if(Number.isNaN(secondsPart))return null;
+  if(parts.length>0&&secondsPart>=60)return null;
+  let hours=0,minutes=0;
+  if(parts.length===2){
+    hours=Number(parts[0]);
+    minutes=Number(parts[1]);
+    if(Number.isNaN(hours)||Number.isNaN(minutes)||minutes>=60)return null;
+  }else if(parts.length===1){
+    minutes=Number(parts[0]);
+    if(Number.isNaN(minutes))return null;
+  }else if(parts.length!==0){
+    return null;
+  }
+  const totalMs=Math.round((hours*3600+minutes*60+secondsPart)*1000);
+  return Number.isFinite(totalMs)?totalMs:null;
+}
+function formatRaceTime(ms){
+  if(ms==null||Number.isNaN(ms))return"";
+  const totalMs=Math.max(0,Math.round(ms));
+  const hours=Math.floor(totalMs/3600000);
+  const minutes=Math.floor((totalMs%3600000)/60000);
+  const seconds=Math.floor((totalMs%60000)/1000);
+  const millis=totalMs%1000;
+  if(hours)return`${hours}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}.${String(millis).padStart(3,"0")}`;
+  if(minutes)return`${minutes}:${String(seconds).padStart(2,"0")}.${String(millis).padStart(3,"0")}`;
+  return`${seconds}.${String(millis).padStart(3,"0")}`;
+}
+function normalizeRaceResults(results){
+  return (results||[]).map(entry=>{
+    if(typeof entry==="string")return{name:entry,timeMs:null,timeText:"",dnf:false};
+    if(!entry||typeof entry!=="object"||!entry.name)return null;
+    const dnf=entry.dnf===true||String(entry.status||"").toUpperCase()==="DNF";
+    const timeMs=dnf?null:(typeof entry.timeMs==="number"?entry.timeMs:parseRaceTime(entry.timeText||entry.time||""));
+    return{name:entry.name,timeMs,timeText:dnf?"":(entry.timeText||entry.time||formatRaceTime(timeMs)),dnf};
+  }).filter(Boolean);
+}
+function getRaceTimingStatus(){
+  const details=raceFinish.map(name=>{
+    const raw=String(raceTimes[name]||"").trim();
+    const dnf=!!raceDnfs[name];
+    const timeMs=dnf?null:parseRaceTime(raw);
+    return{name,raw:dnf?"":raw,timeMs,dnf,hasValue:!dnf&&raw!=="",valid:dnf||(raw!==""&&timeMs!==null)};
+  });
+  const filledCount=details.filter(d=>d.hasValue).length;
+  const invalidCount=details.filter(d=>!d.dnf&&d.hasValue&&!d.valid).length;
+  const allBlank=filledCount===0;
+  const allValid=details.length>0&&details.every(d=>d.valid);
+  const hasFinisher=details.some(d=>!d.dnf);
+  return{details,filledCount,invalidCount,allBlank,allValid,hasFinisher,canSave:hasFinisher&&(allBlank||allValid)};
+}
+function sortRaceFinishByTimes(){
+  const timing=getRaceTimingStatus();
+  if(!timing.allValid)return false;
+  raceFinish=[...timing.details].sort((a,b)=>Number(a.dnf)-Number(b.dnf)||(a.timeMs??Infinity)-(b.timeMs??Infinity)||a.name.localeCompare(b.name,"et")).map(item=>item.name);
+  return true;
+}
+function syncRaceTimesFromInputs(){
+  document.querySelectorAll(".time-input").forEach(inp=>{
+    if(raceDnfs[inp.dataset.name])return;
+    const formatted=autoFormatRaceTimeInput(inp.value);
+    inp.value=formatted;
+    raceTimes[inp.dataset.name]=formatted;
+  });
+}
+function getStageOptions(country){
+  return STAGE_OPTIONS[country]||["Pikim katse","Teine pikim katse"];
+}
+function sortedRaces(){
+  return [...state.races].sort((a,b)=>{
+    const aDate=normalizeStoredDate(a.date,a.id);
+    const bDate=normalizeStoredDate(b.date,b.id);
+    return bDate.localeCompare(aDate)||(b.id||0)-(a.id||0);
+  });
+}
+function resetRaceDraft(){
+  clearTimeout(liveRecordTimer);
+  raceParticipants=[];
+  raceFinish=[];
+  raceTimes={};
+  raceDnfs={};
+  lastLiveRecordNotice="";
+  editingRaceId=null;
+  raceStep=1;
+  raceMode="live";
+  raceDate=todayInputValue();
+  window.raceCountry=COUNTRIES[0].n;
+  raceStage=getStageOptions(window.raceCountry)[0];
+}
+function getStats(){
+  const s={};
+  state.drivers.forEach(d=>{s[d.name]={name:d.name,wins:0,races:0};});
+  state.races.forEach(r=>{normalizeRaceResults(r.results).forEach((result,i)=>{if(!s[result.name])s[result.name]={name:result.name,wins:0,races:0};s[result.name].races++;if(i===0&&!result.dnf)s[result.name].wins++;});});
+  return Object.values(s).sort((a,b)=>b.wins-a.wins||b.races-a.races);
+}
+function getLoserStatuses(){
+  const names=[...new Set([
+    ...state.drivers.map(driver=>driver.name),
+    ...state.races.flatMap(race=>normalizeRaceResults(race.results).map(result=>result.name))
+  ])];
+  const statuses=new Map();
+  names.forEach(name=>{
+    let streak=0;
+    for(const race of sortedRaces()){
+      const normalized=normalizeRaceResults(race.results);
+      const placement=normalized.findIndex(result=>result.name===name);
+      if(placement===-1)continue;
+      if(placement===0)break;
+      streak++;
+    }
+    if(streak>=3)statuses.set(name,{streak});
+  });
+  return statuses;
+}
+function renderDriverName(name, loserStatuses){
+  const safeName=escapeHtml(name);
+  const loserStatus=loserStatuses?.get(name);
+  if(!loserStatus)return safeName;
+  if(loserStatus.streak>=5)return `${safeName}<span class="loser-tag special">🤡 Eriline torbik</span>`;
+  return `${safeName}<span class="loser-tag">Luuser</span>`;
+}
+function formatWinRate(wins,races){
+  if(!races)return"0%";
+  const rate=(wins/races)*100;
+  return `${rate.toFixed(1).replace(/\.0$/,"")}%`;
+}
+function getSeasonRaces(year){
+  const yearPrefix=`${year}-`;
+  return sortedRaces().filter(race=>normalizeStoredDate(race.date,race.id).startsWith(yearPrefix));
+}
+function getSeasonStandings(year){
+  const races=getSeasonRaces(year);
+  const stats=new Map();
+  state.drivers.forEach(driver=>stats.set(driver.name,{name:driver.name,wins:0,races:0}));
+  races.forEach(race=>{
+    normalizeRaceResults(race.results).forEach((result,index)=>{
+      const entry=stats.get(result.name)||{name:result.name,wins:0,races:0};
+      entry.races++;
+      if(index===0&&!result.dnf)entry.wins++;
+      stats.set(result.name,entry);
+    });
+  });
+  const standings=[...stats.values()]
+    .filter(entry=>entry.races>0||entry.wins>0)
+    .map(entry=>({...entry,winRate:formatWinRate(entry.wins,entry.races)}))
+    .sort((a,b)=>b.wins-a.wins||b.races-a.races||a.name.localeCompare(b.name,"et"));
+  return{year,races,standings,champion:standings[0]||null};
+}
+function formatAveragePlace(total,races){
+  if(!races)return"-";
+  return (total/races).toFixed(2).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1");
+}
+function ensureHeadToHeadSelection(stats){
+  const names=stats.map(item=>item.name);
+  if(!names.length){headToHeadA="";headToHeadB="";return;}
+  if(!names.includes(headToHeadA))headToHeadA=names[0];
+  const fallback=names.find(name=>name!==headToHeadA)||names[0];
+  if(!names.includes(headToHeadB)||headToHeadB===headToHeadA)headToHeadB=fallback;
+}
+function getHeadToHeadStats(nameA,nameB){
+  if(!nameA||!nameB||nameA===nameB)return null;
+  const countryMap=new Map();
+  const recentMeetings=[];
+  let meetings=0,aAhead=0,bAhead=0,aPosTotal=0,bPosTotal=0,lastMeeting=null;
+  sortedRaces().forEach(race=>{
+    const normalized=normalizeRaceResults(race.results);
+    const aIndex=normalized.findIndex(result=>result.name===nameA);
+    const bIndex=normalized.findIndex(result=>result.name===nameB);
+    if(aIndex===-1||bIndex===-1)return;
+    const aPos=aIndex+1;
+    const bPos=bIndex+1;
+    const winner=aPos<bPos?nameA:nameB;
+    meetings++;
+    aPosTotal+=aPos;
+    bPosTotal+=bPos;
+    if(aPos<bPos)aAhead++;else if(bPos<aPos)bAhead++;
+    if(!lastMeeting){
+      lastMeeting={...race,aPos,bPos,winner};
+    }
+    recentMeetings.push({
+      id:race.id,
+      date:race.date,
+      flag:race.flag||"🏁",
+      country:race.country,
+      stage:race.stage||"",
+      aPos,
+      bPos,
+      winner
+    });
+    const countryEntry=countryMap.get(race.country)||{key:race.country,flag:race.flag||"🏁",country:race.country,meetings:0,aAhead:0,bAhead:0};
+    countryEntry.meetings++;
+    if(aPos<bPos)countryEntry.aAhead++;else if(bPos<aPos)countryEntry.bAhead++;
+    countryMap.set(race.country,countryEntry);
+  });
+  if(!meetings)return{meetings:0,nameA,nameB};
+  return{
+    nameA,
+    nameB,
+    meetings,
+    aAhead,
+    bAhead,
+    aAvg:formatAveragePlace(aPosTotal,meetings),
+    bAvg:formatAveragePlace(bPosTotal,meetings),
+    lastMeeting,
+    recentMeetings:recentMeetings.slice(0,5),
+    countries:[...countryMap.values()].sort((a,b)=>b.meetings-a.meetings||Math.abs(b.aAhead-b.bAhead)-Math.abs(a.aAhead-a.bAhead)||a.country.localeCompare(b.country,"et"))
+  };
+}
+function getCountryKings(){
+  const countries=new Map();
+  state.races.forEach(race=>{
+    const driverMap=countries.get(race.country)||new Map();
+    normalizeRaceResults(race.results).forEach((result,index)=>{
+      const entry=driverMap.get(result.name)||{name:result.name,wins:0,races:0,positionTotal:0};
+      entry.races++;
+      entry.positionTotal+=index+1;
+      if(index===0&&!result.dnf)entry.wins++;
+      driverMap.set(result.name,entry);
+    });
+    countries.set(race.country,driverMap);
+  });
+  return Array.from(countries.entries()).map(([country,driverMap])=>{
+    const flag=state.races.find(race=>race.country===country)?.flag||"🏁";
+    const ranked=[...driverMap.values()].map(entry=>({...entry,avgPlace:formatAveragePlace(entry.positionTotal,entry.races),winRate:formatWinRate(entry.wins,entry.races)})).sort((a,b)=>b.wins-a.wins||a.positionTotal/a.races-b.positionTotal/b.races||b.races-a.races||a.name.localeCompare(b.name,"et"));
+    return{country,flag,king:ranked[0],contenders:ranked};
+  }).sort((a,b)=>a.country.localeCompare(b.country,"et"));
+}
+function getDriverBreakdown(name){
+  const stageMap=new Map();
+  const countryMap=new Map();
+  let races=0,wins=0;
+  state.races.forEach(race=>{
+    const normalized=normalizeRaceResults(race.results);
+    const placement=normalized.findIndex(result=>result.name===name);
+    if(placement===-1)return;
+    const didWin=placement===0&&!normalized[placement].dnf;
+    races++;
+    if(didWin)wins++;
+
+    const stageKey=`${race.country}|||${race.stage||""}`;
+    const stageEntry=stageMap.get(stageKey)||{
+      key:stageKey,
+      flag:race.flag||"🏁",
+      country:race.country,
+      stage:race.stage||"",
+      races:0,
+      wins:0,
+      history:[]
+    };
+    stageEntry.races++;
+    if(didWin)stageEntry.wins++;
+    stageEntry.history.push({
+      id:race.id,
+      date:race.date,
+      country:race.country,
+      flag:race.flag||"🏁",
+      stage:race.stage||"",
+      position:placement+1,
+      won:didWin,
+      dnf:!!normalized[placement]?.dnf,
+      timeMs:normalized[placement]?.timeMs??null
+    });
+    stageMap.set(stageKey,stageEntry);
+
+    const countryEntry=countryMap.get(race.country)||{
+      key:race.country,
+      flag:race.flag||"🏁",
+      country:race.country,
+      races:0,
+      wins:0,
+      history:[]
+    };
+    countryEntry.races++;
+    if(didWin)countryEntry.wins++;
+    countryEntry.history.push({
+      id:race.id,
+      date:race.date,
+      country:race.country,
+      flag:race.flag||"🏁",
+      stage:race.stage||"",
+      position:placement+1,
+      won:didWin,
+      dnf:!!normalized[placement]?.dnf,
+      timeMs:normalized[placement]?.timeMs??null
+    });
+    countryMap.set(race.country,countryEntry);
+  });
+
+  const stageStats=Array.from(stageMap.values()).map(entry=>({...entry,history:entry.history.sort((a,b)=>normalizeStoredDate(b.date,b.id).localeCompare(normalizeStoredDate(a.date,a.id))||(b.id||0)-(a.id||0)),winRate:formatWinRate(entry.wins,entry.races)}));
+  const countryStats=Array.from(countryMap.values()).map(entry=>({...entry,history:entry.history.sort((a,b)=>normalizeStoredDate(b.date,b.id).localeCompare(normalizeStoredDate(a.date,a.id))||(b.id||0)-(a.id||0)),winRate:formatWinRate(entry.wins,entry.races)}));
+
+  const mostRacedStages=[...stageStats].sort((a,b)=>b.races-a.races||b.wins-a.wins||a.country.localeCompare(b.country,"et"));
+  const mostWonStages=[...stageStats].filter(entry=>entry.wins>0).sort((a,b)=>b.wins-a.wins||b.races-a.races||a.country.localeCompare(b.country,"et"));
+  const bestCountries=[...countryStats].sort((a,b)=>b.wins-a.wins||b.races-a.races||a.country.localeCompare(b.country,"et"));
+
+  return{races,wins,winRate:formatWinRate(wins,races),mostRacedStages,mostWonStages,bestCountries};
+}
+function getCountryRecords(){
+  const best=new Map();
+  sortedRaces().forEach(race=>{
+    normalizeRaceResults(race.results).forEach(result=>{
+      if(result.timeMs==null)return;
+      const current=best.get(race.country);
+      if(!current||result.timeMs<current.timeMs){
+        best.set(race.country,{country:race.country,flag:race.flag||"🏁",name:result.name,timeMs:result.timeMs,date:race.date,id:race.id,stage:race.stage||""});
+      }
+    });
+  });
+  return Array.from(best.values()).sort((a,b)=>a.country.localeCompare(b.country,"et"));
+}
+function getCanonicalCountry(country){
+  if(country==="Monte-Carlo")return"Monte Carlo";
+  if(country==="Tziili")return"Tšiili";
+  return country;
+}
+const COUNTRY_FLAG_CODES={"Monte Carlo":"mc","Rootsi":"se","Horvaatia":"hr","Portugal":"pt","Keenia":"ke","Itaalia":"it","Soome":"fi","Belgia":"be","Kreeka":"gr","Uus-Meremaa":"nz","Hispaania":"es","Jaapan":"jp","Eesti":"ee","Wales":"gb-wls","Saksamaa":"de","Argentiina":"ar","Türgi":"tr","Tšiili":"cl","Mehhiko":"mx"};
+function flagHtml(country){
+ const code=COUNTRY_FLAG_CODES[getCanonicalCountry(country)];
+ return code ? '<img class="country-flag" src="./flags/'+code+'.svg" alt="" aria-hidden="true" width="28" height="21">' : '';
+}
+function countryPickerHtml(){
+ return '<details class="country-picker"><summary>'+flagHtml(window.raceCountry)+' '+escapeHtml(window.raceCountry)+'</summary><div class="country-options">'+COUNTRIES.map(c=>'<button type="button" data-country="'+escapeAttr(c.n)+'">'+flagHtml(c.n)+' '+escapeHtml(c.n)+'</button>').join('')+'</div></details>';
+}
+function getCountryFlag(country){
+  const canonical=getCanonicalCountry(country);
+  return COUNTRIES.find(item=>item.n===canonical)?.f
+    || COUNTRIES.find(item=>item.n===country)?.f
+    || state.races.find(race=>getCanonicalCountry(race.country)===canonical)?.flag
+    || "🏁";
+}
+function getBestStageRecordForRaces(races,country,stage){
+  const canonicalCountry=getCanonicalCountry(country);
+  let best=null;
+  (races||[]).forEach(race=>{
+    if(getCanonicalCountry(race.country)!==canonicalCountry)return;
+    if((race.stage||"")!==(stage||""))return;
+    normalizeRaceResults(race.results).forEach(result=>{
+      if(result.timeMs==null)return;
+      if(!best||result.timeMs<best.timeMs){
+        best={
+          country:canonicalCountry,
+          flag:race.flag||getCountryFlag(canonicalCountry),
+          stage:race.stage||"",
+          name:result.name,
+          timeMs:result.timeMs,
+          date:race.date,
+          id:race.id
+        };
+      }
+    });
+  });
+  return best;
+}
+function getNewStageRecordToast(race,previousRaces){
+  const stage=race.stage||"";
+  const winner=normalizeRaceResults(race.results).find(result=>result.timeMs!=null);
+  if(!winner||!stage)return"";
+  const previousRecord=getBestStageRecordForRaces(previousRaces,race.country,stage);
+  if(!previousRecord)return`Uus rajarekord! ${race.country} · ${stage} · ${winner.name} ${formatRaceTime(winner.timeMs)}`;
+  if(previousRecord.id===race.id){
+    if(winner.timeMs<previousRecord.timeMs)return`Uus rajarekord! ${race.country} · ${stage} · ${winner.name} ${formatRaceTime(winner.timeMs)}`;
+    return"";
+  }
+  if(winner.timeMs<previousRecord.timeMs)return`Uus rajarekord! ${race.country} · ${stage} · ${winner.name} ${formatRaceTime(winner.timeMs)}`;
+  return"";
+}
+function checkLiveStageRecord(){
+  clearTimeout(liveRecordTimer);
+  liveRecordTimer=setTimeout(()=>{
+    if(raceStep!==2||!raceStage)return;
+    const candidates=raceFinish
+      .map(name=>({name,timeMs:raceDnfs[name]?null:parseRaceTime(raceTimes[name])}))
+      .filter(result=>result.timeMs!=null)
+      .sort((a,b)=>a.timeMs-b.timeMs||a.name.localeCompare(b.name,"et"));
+    const candidate=candidates[0];
+    if(!candidate)return;
+    const previousRaces=editingRaceId===null?state.races:state.races.filter(race=>race.id!==editingRaceId);
+    const previousRecord=getBestStageRecordForRaces(previousRaces,window.raceCountry,raceStage);
+    if(previousRecord&&candidate.timeMs>=previousRecord.timeMs)return;
+    const signature=`${getCanonicalCountry(window.raceCountry)}|${raceStage}|${candidate.name}|${candidate.timeMs}`;
+    if(signature===lastLiveRecordNotice)return;
+    lastLiveRecordNotice=signature;
+    const message=previousRecord
+      ?`🏆 Rajarekord ületatud! ${candidate.name} · ${formatRaceTime(candidate.timeMs)} (eelmine ${formatRaceTime(previousRecord.timeMs)})`
+      :`🏆 Uus rajarekord! ${candidate.name} · ${formatRaceTime(candidate.timeMs)}`;
+    showToast(message,false,"record");
+  },300);
+}
+function getCountryStageRecords(){
+  const best=new Map();
+  sortedRaces().forEach(race=>{
+    const country=getCanonicalCountry(race.country);
+    const stage=race.stage||"";
+    if(!stage)return;
+    const key=`${country}|||${stage}`;
+    normalizeRaceResults(race.results).forEach(result=>{
+      if(result.timeMs==null)return;
+      const current=best.get(key);
+      if(!current||result.timeMs<current.timeMs){
+        best.set(key,{
+          country,
+          flag:getCountryFlag(country),
+          stage,
+          name:result.name,
+          timeMs:result.timeMs,
+          date:race.date,
+          id:race.id
+        });
+      }
+    });
+  });
+
+  const seen=new Set();
+  return COUNTRIES.map(entry=>{
+    const country=getCanonicalCountry(entry.n);
+    if(seen.has(country))return null;
+    seen.add(country);
+    const stages=getStageOptions(country).slice(0,2).map((stage,index)=>({
+      stage,
+      direction:index===0?"Otse":"Reverse",
+      record:best.get(`${country}|||${stage}`)||null
+    }));
+    if(!stages.some(item=>item.record))return null;
+    return{
+      country,
+      flag:getCountryFlag(country),
+      stages
+    };
+  }).filter(Boolean);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+window.switchTab = function(tab) {
+  currentTab=tab;
+  document.body.classList.toggle("viewer-tab-active",tab==="sauna-league");
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  document.querySelectorAll(".tab-content").forEach(c=>c.style.display="none");
+  document.getElementById("tab-"+tab).style.display="block";
+  renderTab(tab);
+};
+function renderAll(){document.body.classList.toggle("viewer-tab-active",currentTab==="sauna-league");renderTab(currentTab);const c=state.races.length;document.getElementById("raceCountDisplay").style.display=c>0?"block":"none";document.getElementById("raceCountNum").textContent=c;}
+function renderTab(t){if(t==="leaderboard")renderLeaderboard();else if(t==="season-2025")renderSeason2025();else if(t==="sauna-league")renderSaunaLeague();else if(t==="new-race")renderNewRace();else if(t==="history")renderHistory();else renderDrivers();}
+
+// ── Leaderboard ───────────────────────────────────────────────
+function renderLeaderboard(){
+  const el=document.getElementById("tab-leaderboard"),st=getStats();
+  if(!st.length){el.innerHTML=`<div class="card card-empty"><div style="font-size:36px;margin-bottom:8px">🏁</div>Lisa sõitjaid ja pea esimene võistlus!</div>`;return;}
+  ensureHeadToHeadSelection(st);
+  const loserStatuses=getLoserStatuses();
+  const medals=["🏆","🥈","🥉"];
+  let html=st.map((s,i)=>{
+    const cls=i===0&&s.wins>0?"first":i===1&&s.wins>0?"second":i===2&&s.wins>0?"third":"";
+    const ci=driverIdx(s.name);
+    const winRate=formatWinRate(s.wins,s.races);
+    return`<div class="standing-row clickable ${cls}" onclick='openDriverStats(${jsQuote(s.name)})'>
+      <div style="width:30px;text-align:center;font-size:${i<3&&s.wins>0?18:13}px;color:#888;font-weight:900;font-family:monospace">${i<3&&s.wins>0?medals[i]:i+1}</div>
+      ${avatar(s.name,36,ci>=0?ci:0)}
+      <div style="flex:1"><div style="font-weight:700;font-size:15px">${renderDriverName(s.name,loserStatuses)}</div><div style="font-size:11px;color:#888;margin-top:1px">${s.races} võistlust · ${s.wins} võitu · ${winRate}</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:900;color:${i===0&&s.wins>0?"#E3051B":"#F0F0F0"};font-family:monospace;line-height:1">${s.wins}</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">võitu · ${winRate}</div></div>
+    </div>`;
+  }).join("");
+  const compareOpts=st.map(item=>`<option value="${escapeAttr(item.name)}"${item.name===headToHeadA?" selected":""}>${escapeHtml(item.name)}</option>`).join("");
+  const compareOptsB=st.map(item=>`<option value="${escapeAttr(item.name)}"${item.name===headToHeadB?" selected":""}>${escapeHtml(item.name)}</option>`).join("");
+  const duel=getHeadToHeadStats(headToHeadA,headToHeadB);
+  const kings=getCountryKings();
+  const stageRecords=getCountryStageRecords();
+  const duelSummary=!duel||!duel.meetings?`<div class="warning-box" style="margin-top:10px">Need kaks sõitjat pole veel ühelgi samal etapil koos tulemuse saanud.</div>`:`<div class="detail-summary" style="margin-top:10px"><div class="detail-stat"><div class="detail-stat-value">${duel.aAhead}</div><div class="detail-stat-label">${escapeHtml(duel.nameA)} ees</div></div><div class="detail-stat"><div class="detail-stat-value">${duel.meetings}</div><div class="detail-stat-label">Ühiseid starte</div></div><div class="detail-stat"><div class="detail-stat-value">${duel.bAhead}</div><div class="detail-stat-label">${escapeHtml(duel.nameB)} ees</div></div></div><div class="detail-card" style="margin-top:10px"><div class="section-label">Head-to-head detail</div><div class="detail-list"><div class="detail-row"><div><div class="detail-name">Keskmine koht</div><div class="detail-meta">${escapeHtml(duel.nameA)} vs ${escapeHtml(duel.nameB)}</div></div><div class="detail-value">${duel.aAvg} / ${duel.bAvg}</div></div>${duel.lastMeeting?`<div class="detail-row"><div><div class="detail-name">Viimane duell</div><div class="detail-meta">${flagHtml(duel.lastMeeting.country)} ${escapeHtml(duel.lastMeeting.country)}${duel.lastMeeting.stage?` · ${escapeHtml(duel.lastMeeting.stage)}`:""} · ${formatRaceDate(duel.lastMeeting.date,duel.lastMeeting.id)}</div></div><div class="detail-value">${duel.lastMeeting.aPos} : ${duel.lastMeeting.bPos}</div></div>`:""}${duel.countries.slice(0,5).map(row=>`<div class="detail-row"><div><div class="detail-name">${flagHtml(row.country)} ${escapeHtml(row.country)}</div><div class="detail-meta">${escapeHtml(duel.nameA)} ${row.aAhead} · ${escapeHtml(duel.nameB)} ${row.bAhead}</div></div><div class="detail-value">${row.meetings} x</div></div>`).join("")}</div></div>`;
+  const kingsHtml=kings.length?`<div class="detail-card" style="margin-top:14px"><div class="section-label">Riigi kuningad</div><div class="detail-list">${kings.map(row=>`<div class="detail-row clickable" onclick='openDriverStats(${jsQuote(row.king.name)})'><div><div class="detail-name">${flagHtml(row.country)} ${escapeHtml(row.country)}</div><div class="detail-meta">${escapeHtml(row.king.name)} · ${row.king.wins} võitu · ${row.king.races} starti · keskmine koht ${row.king.avgPlace}</div></div><div class="detail-value">${row.king.winRate}</div></div>`).join("")}</div></div>`:"";
+  const stageRecordsHtml=stageRecords.length?`<div class="detail-card" style="margin-top:14px"><div class="section-label">Riikide rajarekordid</div><div class="detail-list">${stageRecords.map(row=>`<div class="detail-row"><div style="width:100%"><div class="detail-name">${flagHtml(row.country)} ${escapeHtml(row.country)}</div><div class="detail-history" style="margin-top:8px;padding-top:0;border-top:none">${row.stages.map(item=>`<div class="detail-history-row"><div><div class="detail-history-title">${item.direction} · ${escapeHtml(item.stage)}</div><div class="detail-history-meta">${item.record?`${escapeHtml(item.record.name)} · ${formatRaceDate(item.record.date,item.record.id)}`:"Aega veel pole"}</div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="detail-pill">${item.record?formatRaceTime(item.record.timeMs):"-"}</span></div></div>`).join("")}</div></div></div>`).join("")}</div></div>`:"";
+  html+=`<div class="detail-card" style="margin-top:14px"><div class="section-label">Head-to-head</div><div class="form-grid" style="margin-bottom:0"><div><select id="h2hA">${compareOpts}</select></div><div><select id="h2hB">${compareOptsB}</select></div><div><div style="height:100%;display:flex;align-items:center;justify-content:center;background:#111113;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#888">Võrdlus</div></div></div>${duelSummary}</div>${kingsHtml}${stageRecordsHtml}`;
+  html+=`<div class="footer-note">Ainult võitja saab punkti · uueneb automaatselt</div>`;
+  el.innerHTML=html;
+  document.getElementById("h2hA")?.addEventListener("change",e=>{
+    headToHeadA=e.target.value;
+    if(headToHeadA===headToHeadB){
+      const alt=st.find(item=>item.name!==headToHeadA);
+      if(alt)headToHeadB=alt.name;
+    }
+    renderLeaderboard();
+  });
+  document.getElementById("h2hB")?.addEventListener("change",e=>{
+    headToHeadB=e.target.value;
+    if(headToHeadB===headToHeadA){
+      const alt=st.find(item=>item.name!==headToHeadB);
+      if(alt)headToHeadA=alt.name;
+    }
+    renderLeaderboard();
+  });
+}
+
+function renderSaunaLeague(){
+  const el=document.getElementById("tab-sauna-league");
+  el.innerHTML=`<div class="viewer-shell"><div class="viewer-toolbar"><div class="viewer-title">Sauna liiga</div><div class="viewer-actions"><button class="btn-muted" type="button" onclick="reloadSaunaLeague()">Värskenda</button></div></div><iframe id="saunaLeagueFrame" class="viewer-frame" src="${SAUNA_LEAGUE_URL}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Sauna liiga viewer"></iframe><div class="viewer-hint">See vaade tõmbab sisu otse originaalallikast. Me ei dubleeri ennustusandmeid sinu Firebase'i, nii et link jääb automaatselt ajakohaseks seni, kuni WRCFan seda lehte avalikult näitab.</div></div>`;
+}
+function renderSeason2025(){
+  const el=document.getElementById("tab-season-2025");
+  const season=getSeasonStandings(FEATURED_SEASON_YEAR);
+  if(!season.races.length){
+    el.innerHTML=`<div class="card card-empty">${FEATURED_SEASON_YEAR}. aasta kohta pole veel ühtegi võistlust lisatud.</div>`;
+    return;
+  }
+  const champion=season.champion;
+  const championIdx=champion?driverIdx(champion.name):-1;
+  const medals=["🏆","🥈","🥉"];
+  const championHtml=champion?`<div class="detail-card" style="margin-bottom:14px;background:linear-gradient(180deg,rgba(0,70,127,0.18),rgba(17,17,19,0.96));border-color:rgba(66,196,221,0.26)"><div class="section-label">${FEATURED_SEASON_YEAR} aasta meister</div><div class="standing-row clickable first" onclick='openDriverStats(${jsQuote(champion.name)})' style="margin-bottom:0;border-left-color:var(--rally-gold);border-color:rgba(255,196,37,0.25);background:rgba(255,196,37,0.06)"><div style="width:30px;text-align:center;font-size:18px;color:var(--rally-gold);font-weight:900;font-family:monospace">👑</div>${avatar(champion.name,40,championIdx>=0?championIdx:0)}<div style="flex:1"><div style="font-weight:800;font-size:17px">${escapeHtml(champion.name)}</div><div style="font-size:12px;color:#AFC7DB;margin-top:3px">${champion.wins} võitu · ${champion.races} starti · ${champion.winRate}</div></div><div style="text-align:right"><div style="font-size:30px;font-weight:900;color:var(--rally-gold);font-family:monospace;line-height:1">${champion.wins}</div><div style="font-size:10px;color:#AFC7DB;text-transform:uppercase;letter-spacing:1px">hooaja võitu</div></div></div><div class="detail-summary" style="margin-top:12px;margin-bottom:0"><div class="detail-stat"><div class="detail-stat-value">${season.races.length}</div><div class="detail-stat-label">${FEATURED_SEASON_YEAR} etappi</div></div><div class="detail-stat"><div class="detail-stat-value">${season.standings.length}</div><div class="detail-stat-label">aktiivset sõitjat</div></div><div class="detail-stat"><div class="detail-stat-value">${champion.winRate}</div><div class="detail-stat-label">meistri võiduprotsent</div></div></div></div>`:"";
+  const standingsHtml=`<div class="detail-card" style="margin-bottom:14px"><div class="section-label">${FEATURED_SEASON_YEAR} järjestus</div>${season.standings.map((entry,index)=>{const ci=driverIdx(entry.name);const cls=index===0&&entry.wins>0?"first":index===1&&entry.wins>0?"second":index===2&&entry.wins>0?"third":"";return`<div class="standing-row clickable ${cls}" onclick='openDriverStats(${jsQuote(entry.name)})'><div style="width:30px;text-align:center;font-size:${index<3&&entry.wins>0?18:13}px;color:#888;font-weight:900;font-family:monospace">${index<3&&entry.wins>0?medals[index]:index+1}</div>${avatar(entry.name,36,ci>=0?ci:0)}<div style="flex:1"><div style="font-weight:700;font-size:15px">${escapeHtml(entry.name)}</div><div style="font-size:11px;color:#888;margin-top:1px">${entry.races} võistlust · ${entry.wins} võitu · ${entry.winRate}</div></div><div style="text-align:right"><div style="font-size:26px;font-weight:900;color:${index===0?"#E3051B":"#F0F0F0"};font-family:monospace;line-height:1">${entry.wins}</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">punkti</div></div></div>`;}).join("")}</div>`;
+  const racesHtml=`<div class="detail-card"><div class="section-label">${FEATURED_SEASON_YEAR} rallid</div><div class="detail-list">${season.races.map(race=>{const normalized=normalizeRaceResults(race.results);const winner=normalized[0];const winnerIdx=winner?driverIdx(winner.name):-1;return`<div class="detail-row${winner?" clickable":""}"${winner?` onclick='openDriverStats(${jsQuote(winner.name)})'`:""}><div><div class="detail-name">${flagHtml(race.country)} ${escapeHtml(race.country)}${race.stage?` · ${escapeHtml(race.stage)}`:""}</div><div class="detail-meta">${formatRaceDate(race.date,race.id)} · ${normalized.length} osalejat</div></div><div style="display:flex;align-items:center;gap:8px">${winner?avatar(winner.name,28,winnerIdx>=0?winnerIdx:0):""}<div style="text-align:right"><div style="font-size:13px;font-weight:800;color:#F0F0F0">${winner?escapeHtml(winner.name):"Tulemus puudub"}</div><div class="detail-meta" style="margin-top:2px">${winner?.timeMs!=null?formatRaceTime(winner.timeMs):"võitja"}</div></div></div></div>`;}).join("")}</div></div>`;
+  el.innerHTML=championHtml+standingsHtml+racesHtml;
+}
+
+function renderDriverHistoryRows(history){
+  if(!history?.length)return"";
+  return `<div class="detail-history">${history.map(entry=>{
+    const stageLabel=entry.stage?`${escapeHtml(entry.country)} · ${escapeHtml(entry.stage)}`:escapeHtml(entry.country);
+    const resultLabel=entry.dnf?"D.N.F":entry.won?`🏆 ${entry.position}. koht`:`${entry.position}. koht`;
+    const timeLabel=entry.dnf?"D.N.F":entry.timeMs!=null?formatRaceTime(entry.timeMs):"Aeg puudub";
+    return `<div class="detail-history-row"><div><div class="detail-history-title">${stageLabel}</div><div class="detail-history-meta">${formatRaceDate(entry.date,entry.id)} · ${resultLabel}</div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="detail-pill">${timeLabel}</span></div></div>`;
+  }).join("")}</div>`;
+}
+function renderDriverDetailRows(items, kind, section, driverName){
+  if(!items.length)return`<div class="detail-empty">Selle sõitja kohta pole siin veel andmeid.</div>`;
+  return `<div class="detail-list">${items.map(item=>{
+    const label=kind==="country"?`${flagHtml(item.country)} ${item.country}`:`${flagHtml(item.country)} ${item.country}${item.stage?` · ${escapeHtml(item.stage)}`:""}`;
+    const meta=kind==="wins"?`${item.wins} võitu · ${item.races} starti · ${item.winRate}`:kind==="country"?`${item.wins} võitu · ${item.races} starti · ${item.winRate}`:`${item.races} starti · ${item.wins} võitu · ${item.winRate}`;
+    const value=kind==="wins"?`${item.wins} W`:kind==="country"?`${item.winRate}`:`${item.races} x`;
+    const isOpen=activeDriverDetail&&activeDriverDetail.driver===driverName&&activeDriverDetail.section===section&&activeDriverDetail.key===item.key;
+    return `<div class="detail-row clickable" onclick='toggleDriverDetail(${jsQuote(driverName)},${jsQuote(section)},${jsQuote(item.key)})'><div><div class="detail-name">${label}</div><div class="detail-meta">${meta}</div></div><div class="detail-value">${value}${isOpen?" ▲":" ▼"}</div></div>${isOpen?renderDriverHistoryRows(item.history):""}`;
+  }).join("")}</div>`;
+}
+function renderRaceResultsList(normalized){
+  return normalized.map((result,i)=>{
+    const ci=driverIdx(result.name);
+    const isWinner=i===0&&!result.dnf;
+    return`<div class="history-result" style="border-bottom:${i<normalized.length-1?"1px solid #2E2E30":"none"}"><span style="width:${result.dnf?36:22}px;text-align:center;font-size:${isWinner?15:11}px;color:${result.dnf?"#F5A623":isWinner?"#E3051B":"#888"};font-weight:900">${result.dnf?"D.N.F":isWinner?"🏆":`${i+1}.`}</span>${avatar(result.name,24,ci>=0?ci:0)}<span style="flex:1;font-size:13px;color:${isWinner?"#F0F0F0":"#888"};font-weight:${isWinner?700:400}">${result.name}</span><span style="font-size:11px;color:${result.dnf?"#F5A623":result.timeMs!=null?(isWinner?"#E3051B":"#F0F0F0"):(isWinner?"#E3051B":"#333")};font-weight:900;font-family:monospace">${result.dnf?"D.N.F":result.timeMs!=null?formatRaceTime(result.timeMs):(isWinner?"+1":"0")}</span></div>`;
+  }).join("");
+}
+function renderCountryHistoryRows(country){
+  const races=sortedRaces().filter(race=>race.country===country);
+  if(!races.length)return`<div class="detail-empty">Selle riigi sõite ei leitud.</div>`;
+  return `<div class="detail-history">${races.map(race=>{
+    const normalized=normalizeRaceResults(race.results);
+    const winner=normalized[0];
+    return `<div class="detail-history-row"><div style="width:100%"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="detail-history-title">${flagHtml(race.country)} ${escapeHtml(race.country)}${race.stage?` · ${escapeHtml(race.stage)}`:""}</div><div class="detail-history-meta">${formatRaceDate(race.date,race.id)} · ${normalized.length} osalejat</div></div><div style="display:flex;align-items:center;gap:8px"><span class="detail-pill">${winner?`Võitja ${escapeHtml(winner.name)}`:"Tulemus puudub"}</span><button class="btn-icon" onclick="editRace(${race.id})">✎</button></div></div><div style="margin-top:10px">${renderRaceResultsList(normalized)}</div></div></div>`;
+  }).join("")}</div>`;
+}
+
+// ── New Race ──────────────────────────────────────────────────
+function renderNewRace(){
+  if(!canEdit() && editingRaceId===null){document.getElementById("tab-new-race").innerHTML="<div class=warning-box>Uue võistluse lisamiseks logi sisse.</div>";return;}
+  const el=document.getElementById("tab-new-race");
+  if(state.drivers.length<2){el.innerHTML=`<div class="warning-box">⚠ Lisa vähemalt 2 sõitjat vahekaardilt "Sõitjad"</div>`;return;}
+  if(raceStep===1){
+    const opts=COUNTRIES.map(c=>`<option value="${c.n}"${c.n===window.raceCountry?" selected":""}>${c.n}</option>`).join("");
+    const stages=getStageOptions(window.raceCountry);
+    if(!stages.includes(raceStage))raceStage=stages[0];
+    const stageOpts=stages.map(stage=>`<option value="${escapeAttr(stage)}"${stage===raceStage?" selected":""}>${escapeHtml(stage)}</option>`).join("");
+    const rows=state.drivers.map((d,i)=>{const sel=raceParticipants.includes(d.name);return`<div class="driver-row${sel?" selected":""}" data-dname="${d.name.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}">${avatar(d.name,30,i)}<span style="flex:1;font-size:14px;font-weight:600;pointer-events:none">${d.name}</span>${sel?`<span style="color:#E3051B;font-size:18px;pointer-events:none">✓</span>`:""}</div>`;}).join("");
+    const modeHelp=raceMode==="history"?"Sisesta juba sõidetud etapp koos päris toimumiskuupäevaga.":"Kasuta seda vaadet nii live võistluse kui ka sama päeva sisestuse jaoks.";
+    el.innerHTML=`<div style="margin-bottom:14px"><div class="section-label">Sisestuse tüüp</div><div class="mode-switch"><button class="mode-btn${raceMode==="live"?" active":""}" data-mode="live" type="button">Live / uus</button><button class="mode-btn${raceMode==="history"?" active":""}" data-mode="history" type="button">Varasem võistlus</button></div><div class="helper-note">${modeHelp}</div></div><div class="form-grid"><div><div class="section-label">Riik / etapp</div><select id="csel" hidden>${opts}</select>${countryPickerHtml()}</div><div><div class="section-label">Pikem katse</div><select id="stageSel">${stageOpts}</select></div><div><div class="section-label">${raceMode==="history"?"Toimumiskuupäev":"Kuupäev"}</div><input id="raceDateInput" type="date" value="${raceDate}"></div></div><div id="plist" style="margin-bottom:14px"><div class="section-label">Osalejad</div>${rows}</div><button id="nsbtn" class="btn-red btn-red-full"${raceParticipants.length<2||!raceDate?" disabled":""}>${raceMode==="history"?"Sisesta ajaloolised tulemused →":"Sisesta tulemused →"}</button>`;
+    document.querySelectorAll('[data-country]').forEach(button=>button.addEventListener('click',()=>{const select=document.getElementById('csel');select.value=button.dataset.country;select.dispatchEvent(new Event('change'));}));
+    document.getElementById("csel").addEventListener("change",e=>{window.raceCountry=e.target.value;raceStage=getStageOptions(window.raceCountry)[0];renderNewRace();});
+    document.getElementById("stageSel").addEventListener("change",e=>{raceStage=e.target.value;});
+    document.getElementById("raceDateInput").addEventListener("change",e=>{raceDate=e.target.value||todayInputValue();renderNewRace();});
+    document.getElementById("nsbtn").addEventListener("click",()=>{raceFinish=[...raceParticipants];raceStep=2;renderNewRace();});
+    document.querySelectorAll(".mode-btn").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        raceMode=btn.dataset.mode;
+        if(!raceDate)raceDate=todayInputValue();
+        renderNewRace();
+      });
+    });
+    document.querySelectorAll("#plist .driver-row").forEach(row=>{
+      row.addEventListener("click",()=>{
+        const name=row.dataset.dname;
+        const idx=raceParticipants.indexOf(name);
+        if(idx>=0)raceParticipants.splice(idx,1);else raceParticipants.push(name);
+        renderNewRace();
+      });
+    });
+  }else{
+    const timing=getRaceTimingStatus();
+    const ctry=COUNTRIES.find(c=>c.n===window.raceCountry);
+    const isEditing=editingRaceId!==null;
+    const timingInfo=!timing.hasFinisher?`<div class="warning-box">Vähemalt üks sõitja peab võistluse lõpetama.</div>`:timing.invalidCount>0?`<div class="warning-box">Aja vorming peab olema näiteks <strong>21.450</strong>, <strong>3:21.450</strong> või <strong>1:03:21.450</strong>. Numbritega sisestades kasuta vähemalt 4 numbrit, näiteks <strong>21450</strong> või <strong>321450</strong>.</div>`:timing.filledCount>0&&!timing.allValid?`<div class="warning-box">Kui sisestad ajad, peavad need olemas olema kõigil lõpetanud osalejatel. Katkestanud sõitja märgi D.N.F-iks.</div>`:`<div class="time-hint">Sisesta lõpetajate ajad või jäta kõik ajad tühjaks. Kui sõitja ei lõpetanud, vajuta tema real <strong>D.N.F</strong>. D.N.F sõitja liigub järjestuse lõppu ega saa võitu või rajarekordit.</div>`;
+    const rows=raceFinish.map((name,i)=>{
+      const ci=driverIdx(name);
+      const dnf=!!raceDnfs[name];
+      const raw=String(raceTimes[name]||"");
+      const formatted=dnf?"":autoFormatRaceTimeInput(raw);
+      const timeMs=dnf?null:parseRaceTime(formatted);
+      const invalid=!dnf&&formatted.trim()!==""&&timeMs===null;
+      const isWinner=i===0&&!dnf;
+      return`<div class="finish-row${isWinner?" winner":""}${dnf?" dnf":""}"><div style="width:${dnf?36:26}px;text-align:center;font-size:${isWinner?18:12}px;font-weight:900;font-family:monospace;color:${dnf?"#F5A623":"#888"}">${dnf?"D.N.F":isWinner?"🏆":`${i+1}.`}</div>${avatar(name,30,ci>=0?ci:0)}<div class="finish-stack"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:600">${name}</span><span style="font-size:11px;font-weight:900;font-family:monospace;color:${dnf?"#F5A623":timeMs!=null?"#E3051B":"#666"}">${dnf?"EI LÕPETANUD":timeMs!=null?formatRaceTime(timeMs):"AEG"}</span></div><input class="time-input${invalid?" invalid":""}" data-name="${escapeAttr(name)}" value="${escapeAttr(formatted)}" placeholder="321450" inputmode="numeric" autocomplete="off"${dnf?" disabled":""}></div><button type="button" class="btn-icon dnf-btn${dnf?" active":""}" data-name="${escapeAttr(name)}" aria-pressed="${dnf}">D.N.F</button><div style="display:flex;gap:4px"><button class="btn-icon up-btn"${i===0?" disabled":""}>▲</button><button class="btn-icon dn-btn"${i===raceFinish.length-1?" disabled":""}>▼</button></div><div style="font-size:13px;font-weight:900;color:${isWinner?"#E3051B":"#333"};font-family:monospace;min-width:28px;text-align:right">${isWinner?"+1":"0"}</div></div>`;
+    }).join("");
+    const rankingHelp=raceMode==="history"?"Sisestad varem sõidetud etapi tulemused. 1. koht peab jääma üles.":"Kasuta nooli järjestuse muutmiseks. 1. koht on tipus.";
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button id="backbtn" class="btn-icon">◀</button><div><div style="font-size:14px;font-weight:700">${flagHtml(window.raceCountry)} ${window.raceCountry}</div><div style="font-size:11px;color:#888;margin-top:2px">${escapeHtml(raceStage)} · ${formatRaceDate(raceDate)}</div></div></div><div style="font-size:11px;color:#888;margin-bottom:10px">${rankingHelp}</div>${isEditing?`<div class="warning-box">Muudad olemasolevat võistlust. Salvesta muudatused kirjutavad vana tulemuse üle.</div>`:""}${timingInfo}<div id="frows">${rows}</div><button id="savebtn" class="btn-red btn-red-full" style="margin-top:12px"${timing.canSave?"":" disabled"}>${isEditing?"💾 Salvesta muudatused":raceMode==="history"?"💾 Salvesta varasem võistlus":"🏁 Salvesta võistlus"}</button>`;
+    document.getElementById("backbtn").addEventListener("click",()=>{raceStep=1;renderNewRace();});
+    document.getElementById("savebtn").addEventListener("click",()=>window.saveRace());
+    document.querySelectorAll("#frows .up-btn").forEach((btn,i)=>{btn.addEventListener("click",()=>{if(i===0)return;[raceFinish[i-1],raceFinish[i]]=[raceFinish[i],raceFinish[i-1]];raceFinish.sort((a,b)=>Number(!!raceDnfs[a])-Number(!!raceDnfs[b]));renderNewRace();});});
+    document.querySelectorAll("#frows .dn-btn").forEach((btn,i)=>{btn.addEventListener("click",()=>{if(i===raceFinish.length-1)return;[raceFinish[i+1],raceFinish[i]]=[raceFinish[i],raceFinish[i+1]];raceFinish.sort((a,b)=>Number(!!raceDnfs[a])-Number(!!raceDnfs[b]));renderNewRace();});});
+    document.querySelectorAll("#frows .dnf-btn").forEach(btn=>btn.addEventListener("click",()=>{
+      const name=btn.dataset.name;
+      raceDnfs[name]=!raceDnfs[name];
+      if(raceDnfs[name])raceTimes[name]="";
+      raceFinish.sort((a,b)=>Number(!!raceDnfs[a])-Number(!!raceDnfs[b]));
+      renderNewRace();
+    }));
+    document.querySelectorAll(".time-input").forEach(inp=>{
+      inp.addEventListener("input",()=>{
+        const formatted=autoFormatRaceTimeInput(inp.value);
+        inp.value=formatted;
+        raceTimes[inp.dataset.name]=formatted;
+        const invalid=formatted.trim()!==""&&parseRaceTime(formatted)===null;
+        inp.classList.toggle("invalid",invalid);
+        if(!invalid)checkLiveStageRecord();
+      });
+      inp.addEventListener("change",()=>{
+        const formatted=autoFormatRaceTimeInput(inp.value);
+        inp.value=formatted;
+        raceTimes[inp.dataset.name]=formatted;
+        checkLiveStageRecord();
+        sortRaceFinishByTimes();
+        renderNewRace();
+      });
+    });
+  }
+}
+
+// ── History ───────────────────────────────────────────────────
+function renderHistory(){
+  const el=document.getElementById("tab-history");
+  if(!state.races.length){el.innerHTML=`<div class="card card-empty">Ühtegi võistlust pole veel toimunud.</div>`;return;}
+  const query=normalizeSearchText(historySearch);
+  const filteredRaces=sortedRaces().filter(race=>{
+    if(!query)return true;
+    const normalized=normalizeRaceResults(race.results);
+    const haystack=normalizeSearchText([
+      race.country,
+      race.stage||"",
+      formatRaceDate(race.date,race.id),
+      normalizeStoredDate(race.date,race.id),
+      ...normalized.map(result=>result.name)
+    ].join(" "));
+    return haystack.includes(query);
+  });
+  const countryRecords=getCountryStageRecords();
+  const filteredRecords=countryRecords.filter(row=>{
+    if(!query)return true;
+    const searchable=[row.country,...row.stages.flatMap(item=>item.record?[item.stage,item.direction,item.record.name,formatRaceDate(item.record.date,item.record.id),normalizeStoredDate(item.record.date,item.record.id)]:[item.stage,item.direction])];
+    return normalizeSearchText(searchable.join(" ")).includes(query);
+  });
+  const searchHtml=`<div style="margin-bottom:14px"><div class="section-label">Otsing</div><input id="historySearchInput" value="${escapeAttr(historySearch)}" placeholder="Otsi riiki, etappi, kuupäeva või sõitjat..."><div class="helper-note" style="margin-top:8px">${filteredRaces.length} / ${state.races.length} võistlust nähtaval</div></div>`;
+  const recordsHtml=filteredRecords.length?`<div style="margin-bottom:14px"><div class="section-label">Riigirekordid · otse ja reverse</div><div class="record-list">${filteredRecords.map(row=>{const isOpen=activeHistoryCountry===row.country;return`<div><div class="record-row clickable" onclick='toggleHistoryCountry(${jsQuote(row.country)})'><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">${flagHtml(row.country)} ${escapeHtml(row.country)}</div><div class="detail-history" style="margin-top:8px;padding-top:0;border-top:none">${row.stages.map(item=>{const record=item.record;return`<div class="detail-history-row"><div><div class="detail-history-title">${item.direction}</div><div class="detail-history-meta">${record?`${escapeHtml(record.name)} · ${escapeHtml(item.stage)} · ${formatRaceDate(record.date,record.id)}`:`${escapeHtml(item.stage)} · aeg puudub`}</div></div><div class="record-time">${record?formatRaceTime(record.timeMs):"-"}</div></div>`;}).join("")}</div></div><div class="record-meta" style="white-space:nowrap">Kõik sõidud ${isOpen?"▲":"▼"}</div></div>${isOpen?renderCountryHistoryRows(row.country):""}</div>`;}).join("")}</div></div>`:query?`<div class="warning-box">Selle otsinguga riigirekordeid ei leitud.</div>`:`<div class="warning-box">Riigirekordid ilmuvad siia siis, kui lisad võistlustele ajad.</div>`;
+  const raceCards=filteredRaces.map(race=>{
+    const normalized=normalizeRaceResults(race.results);
+    return`<div class="history-card"><div class="history-header"><span style="font-size:22px">${flagHtml(race.country)}</span><div style="flex:1"><div style="font-size:14px;font-weight:700">${race.country}</div><div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.5px">${race.stage?`${escapeHtml(race.stage)} · `:""}${formatRaceDate(race.date,race.id)}</div></div><div style="display:flex;gap:6px"><button class="btn-icon" onclick="editRace(${race.id})">✎</button><button class="btn-icon" onclick="deleteRace(${race.id})">🗑</button></div></div><div class="history-body">${renderRaceResultsList(normalized)}</div></div>`;
+  }).join("");
+  el.innerHTML=searchHtml+recordsHtml+(raceCards||`<div class="card card-empty">Selle otsinguga võistlusi ei leitud.</div>`);
+  document.getElementById("historySearchInput")?.addEventListener("input",e=>{
+    const cursor=e.target.selectionStart??historySearch.length;
+    historySearch=e.target.value;
+    renderHistory();
+    requestAnimationFrame(()=>{
+      const input=document.getElementById("historySearchInput");
+      if(!input)return;
+      input.focus();
+      input.setSelectionRange(cursor,cursor);
+    });
+  });
+}
+
+// ── Drivers ───────────────────────────────────────────────────
+function renderDrivers(){
+  const el=document.getElementById("tab-drivers"),st=getStats();
+  let html=`<div style="display:flex;gap:8px;margin-bottom:14px"><input id="ndi" placeholder="Sõitja nimi..." onkeydown="if(event.key==='Enter')addDriver()" style="flex:1"><button class="btn-red" onclick="addDriver()">+ Lisa</button></div>`;
+  if(!state.drivers.length)html+=`<div class="card card-empty">Lisa oma rallisõitjad</div>`;
+  else html+=state.drivers.map((d,i)=>{const s=st.find(x=>x.name===d.name);const races=s?.races||0;const wins=s?.wins||0;const winRate=formatWinRate(wins,races);return`<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#1A1A1C;border:1px solid #2E2E30;border-left:4px solid ${AV_COLORS[i%AV_COLORS.length]};border-radius:10px;margin-bottom:7px">${avatar(d.name,36,i)}<div style="flex:1"><div style="font-size:14px;font-weight:700">${d.name}</div><div style="font-size:11px;color:#888">${races} võistlust · ${wins} võitu · ${winRate}</div></div><div style="text-align:right"><div style="font-size:22px;font-weight:900;color:${wins>0?"#E3051B":"#333"};font-family:monospace;min-width:28px;text-align:right">${wins}</div><div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px">${winRate}</div></div><button class="btn-icon" onclick="removeDriver(${d.id})" style="margin-left:4px">🗑</button></div>`;}).join("");
+  el.innerHTML=html;
+}
+
+// ── Actions (window scope for inline onclick) ─────────────────
+
+window.saveRace = async function(){
+  if(saving||!canEdit())return;
+  if(!raceFinish.length)return;
+  syncRaceTimesFromInputs();
+  const timing=getRaceTimingStatus();
+  if(!timing.hasFinisher){showToast("Vähemalt üks sõitja peab võistluse lõpetama", true);return;}
+  if(!timing.canSave){showToast("Sisesta ajad kõigile lõpetajatele või jäta kõik ajad tühjaks", true);return;}
+  const c=COUNTRIES.find(x=>x.n===window.raceCountry);
+  const detailByName=new Map(timing.details.map(item=>[item.name,item]));
+  const sortedDetails=timing.allValid?[...timing.details].sort((a,b)=>Number(a.dnf)-Number(b.dnf)||(a.timeMs??Infinity)-(b.timeMs??Infinity)||a.name.localeCompare(b.name,"et")):raceFinish.map(name=>detailByName.get(name));
+  const results=sortedDetails.map(item=>({name:item.name,timeMs:item.dnf?null:(item.timeMs??null),timeText:item.dnf||item.timeMs==null?"":formatRaceTime(item.timeMs),dnf:!!item.dnf}));
+  const previousRaces=[...state.races];
+  const existingRace=editingRaceId!==null?state.races.find(r=>r.id===editingRaceId):null;
+  const updatedRace={...(existingRace||{}),id:existingRace?.id??Date.now(),country:window.raceCountry,stage:raceStage,flag:c?.f||"🏁",date:normalizeStoredDate(raceDate),entryMode:raceMode,results};
+  const recordToast=getNewStageRecordToast(updatedRace,previousRaces);
+  if(existingRace)state.races=state.races.map(r=>r.id===existingRace.id?updatedRace:r);
+  else state.races.push(updatedRace);
+  if(!await saveToDb())return;
+  const targetTab=existingRace?"history":"leaderboard";
+  resetRaceDraft();
+  switchTab(targetTab);
+  if(recordToast)showToast(recordToast);
+};
+window.editRace = function(id){
+  if(!canEdit()){showToast("Tulemuste muutmiseks logi sisse.",true);return;}
+  const race=state.races.find(r=>r.id===id);
+  if(!race)return;
+  const normalized=normalizeRaceResults(race.results);
+  if(!normalized.length){showToast("Sellel võistlusel pole muudetavaid tulemusi", true);return;}
+  editingRaceId=id;
+  raceMode=race.entryMode==="live"?"live":"history";
+  raceDate=normalizeStoredDate(race.date,race.id);
+  window.raceCountry=race.country;
+  raceStage=race.stage||getStageOptions(window.raceCountry)[0];
+  raceParticipants=normalized.map(result=>result.name);
+  raceFinish=normalized.map(result=>result.name);
+  raceTimes=Object.fromEntries(normalized.map(result=>[result.name,result.timeMs!=null?formatRaceTime(result.timeMs):autoFormatRaceTimeInput(result.timeText||"")]));
+  raceDnfs=Object.fromEntries(normalized.map(result=>[result.name,!!result.dnf]));
+  activeHistoryCountry="";
+  raceStep=2;
+  switchTab("new-race");
+};
+window.addDriver = function(){
+  if(!isAdmin()||saving)return;
+  const inp=document.getElementById("ndi"),name=inp.value.trim();
+  if(!name||state.drivers.find(d=>d.name.toLowerCase()===name.toLowerCase()))return;
+  state.drivers.push({name,id:Date.now()});saveToDb();inp.value="";
+};
+window.removeDriver = function(id){if(!isAdmin()||saving)return;state.drivers=state.drivers.filter(d=>d.id!==id);saveToDb();};
+window.deleteRace = function(id){if(!isAdmin()||saving)return;state.races=state.races.filter(r=>r.id!==id);saveToDb();};
+window.reloadSaunaLeague = function(){
+  const frame=document.getElementById("saunaLeagueFrame");
+  if(frame)frame.src=SAUNA_LEAGUE_URL;
+};
+window.toggleHistoryCountry = function(country){
+  activeHistoryCountry=activeHistoryCountry===country?"":country;
+  renderHistory();
+};
+window.openDriverStats = function(name){
+  if(!activeDriverDetail||activeDriverDetail.driver!==name)activeDriverDetail={driver:name,section:null,key:null};
+  window.renderDriverStatsModal(name);
+};
+window.renderDriverStatsModal = function(name){
+  const modal=document.getElementById("driverModal");
+  const detail=getDriverBreakdown(name);
+  const ci=driverIdx(name);
+  const safeName=escapeHtml(name);
+  const modalHtml=`<div class="modal-card" onclick="event.stopPropagation()"><div class="modal-head"><div style="display:flex;align-items:center;gap:12px"><div>${avatar(name,42,ci>=0?ci:0)}</div><div><div class="modal-title">${safeName}</div><div class="modal-sub">${detail.races} võistlust · ${detail.wins} võitu · ${detail.winRate}</div></div></div><button class="btn-icon" type="button" onclick="closeDriverStats()">✕</button></div><div class="modal-body"><div class="detail-summary"><div class="detail-stat"><div class="detail-stat-value">${detail.races}</div><div class="detail-stat-label">Sõidetud võistlusi</div></div><div class="detail-stat"><div class="detail-stat-value">${detail.wins}</div><div class="detail-stat-label">Võidetud võistlusi</div></div><div class="detail-stat"><div class="detail-stat-value">${detail.winRate}</div><div class="detail-stat-label">Võiduprotsent</div></div></div><div class="detail-sections"><div class="detail-card"><div class="section-label">Enim sõidetud etapid</div>${renderDriverDetailRows(detail.mostRacedStages.slice(0,5),"races","most-raced",name)}</div><div class="detail-card"><div class="section-label">Enim võidetud etapid</div>${renderDriverDetailRows(detail.mostWonStages.slice(0,5),"wins","most-won",name)}</div><div class="detail-card"><div class="section-label">Kõige edukamad riigid</div>${renderDriverDetailRows(detail.bestCountries.slice(0,5),"country","best-country",name)}</div></div></div></div>`;
+  modal.innerHTML=modalHtml;
+  modal.style.display="flex";
+  document.body.classList.add("modal-open");
+};
+window.toggleDriverDetail = function(driverName,section,key){
+  const isSame=activeDriverDetail&&activeDriverDetail.driver===driverName&&activeDriverDetail.section===section&&activeDriverDetail.key===key;
+  activeDriverDetail=isSame?{driver:driverName,section:null,key:null}:{driver:driverName,section,key};
+  window.renderDriverStatsModal(driverName);
+};
+window.closeDriverStats = function(){
+  const modal=document.getElementById("driverModal");
+  modal.style.display="none";
+  modal.innerHTML="";
+  activeDriverDetail=null;
+  document.body.classList.remove("modal-open");
+};
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")window.closeDriverStats();
+});
+
+const permissionsObserver=new MutationObserver(()=>{
+ document.querySelectorAll('[onclick^="deleteRace"],[onclick^="removeDriver"],[onclick="addDriver()"],#ndi').forEach(el=>{el.hidden=!isAdmin();});
+ document.querySelectorAll('[onclick^="editRace"]').forEach(el=>{el.hidden=!canEdit();});
+});
+permissionsObserver.observe(document.querySelector('.main'),{childList:true,subtree:true});
+
+</script>
+
+
+</body></html>
+
