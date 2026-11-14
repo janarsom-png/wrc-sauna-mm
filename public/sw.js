@@ -1,5 +1,5 @@
-const CACHE_NAME = 'wrc-sauna-mm-v1';
-const ASSETS = ['/', '/index.html', '/manifest.json', '/sauna-rally-logo-3.svg', '/wrc-sauna-hero-clean.png'];
+const CACHE_NAME = 'wrc-sauna-mm-v2';
+const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png', '/sauna-rally-logo-3.svg', '/wrc-sauna-hero-clean.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));

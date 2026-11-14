@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Sauna MM">
-<link rel="apple-touch-icon" href="/sauna-rally-logo-3.svg">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="icon" type="image/svg+xml" href="./sauna-rally-logo-3.svg">
 <style>
 .country-flag{display:inline-block;width:1.4em;height:1.05em;object-fit:contain;vertical-align:-.15em;border-radius:2px;flex-shrink:0}
@@ -164,7 +164,7 @@
 
 <div class="main">
 <section class="card" style="padding:16px;margin-bottom:16px" aria-label="Sisselogimine">
-<div class="account-row"><p id="accountStatus" role="status">Sisselogimise kontroll…</p><span id="temporaryNotice" class="temporary-notice" hidden>Mäge on munn</span><button id="logoutButton" class="btn-muted" hidden>Logi välja</button></div>
+<div class="account-row"><p id="accountStatus" role="status">Sisselogimise kontroll…</p><span id="temporaryNotice" class="temporary-notice" hidden>Mäge on munn</span><button id="installAppButton" class="btn-muted" hidden>Lisa avaekraanile</button><button id="logoutButton" class="btn-muted" hidden>Logi välja</button></div>
 <form id="loginForm" style="display:flex;flex-wrap:wrap;gap:8px">
 <input type="email" id="loginEmail" placeholder="E-post" aria-label="E-post" autocomplete="username" required>
 <input type="password" id="loginPassword" placeholder="Parool" aria-label="Parool" autocomplete="current-password" required>
@@ -1213,6 +1213,25 @@ permissionsObserver.observe(document.querySelector('.main'),{childList:true,subt
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
+
+let installPromptEvent=null;
+const installAppButton=document.getElementById('installAppButton');
+window.addEventListener('beforeinstallprompt',(event)=>{
+  event.preventDefault();
+  installPromptEvent=event;
+  installAppButton.hidden=false;
+});
+installAppButton.addEventListener('click',async()=>{
+  if(!installPromptEvent)return;
+  installPromptEvent.prompt();
+  await installPromptEvent.userChoice;
+  installPromptEvent=null;
+  installAppButton.hidden=true;
+});
+window.addEventListener('appinstalled',()=>{
+  installPromptEvent=null;
+  installAppButton.hidden=true;
+});
 
 </script>
 
