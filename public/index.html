@@ -28,8 +28,6 @@
   .header::before{content:"";position:absolute;z-index:0;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03) 60%,rgba(0,0,0,.22));pointer-events:none}
   .header::after{content:"";position:absolute;z-index:1;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--red) 14% 86%,transparent);box-shadow:0 0 18px rgba(227,5,27,.9);pointer-events:none}
   .header-accessible-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .header-brand{position:absolute;z-index:2;inset:0 auto 0 0;width:80%;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#030508 0 88%,rgba(3,5,8,.92) 94%,transparent);overflow:hidden}
-  .header-brand img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 10px 28px rgba(0,0,0,.55))}
   .logo{width:40px;height:40px;display:block;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35))}
   .logo-large{width:60px;height:60px}
   .header-sub{position:absolute;z-index:2;left:27.2%;top:54%;display:flex;align-items:center;width:34%;min-height:25%;padding:clamp(4px,.6vw,10px) clamp(7px,1vw,16px);background:linear-gradient(90deg,#020508 0 88%,rgba(2,5,8,.9));border-radius:6px;color:#fff;font-size:clamp(9px,1.45vw,21px);font-weight:600;letter-spacing:.35px;white-space:nowrap;text-shadow:0 2px 8px #000}
@@ -141,7 +139,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .loading-text{color:var(--muted);font-size:13px;letter-spacing:1px;text-transform:uppercase}
   @media(max-width:700px){.viewer-toolbar{flex-direction:row;align-items:center}.viewer-frame{height:70vh;min-height:620px}.detail-summary{grid-template-columns:1fr}.modal-overlay{padding:12px}}
-  @media(max-width:480px){.header-brand{width:81%}.header-brand img{object-position:left center}.header-sub{left:26.5%;top:54%;width:37%;min-height:25%;padding:4px 6px;font-size:8px}.header-right{right:3.7%;top:22%;width:19.5%;height:55%}.race-count-label{font-size:7px}.race-count-num{font-size:clamp(22px,8vw,34px)}.tab-btn{font-size:9px}.form-grid{grid-template-columns:1fr}.record-row{align-items:flex-start}.detail-row{flex-direction:column}.detail-value{white-space:normal}.detail-history-row{flex-direction:column}}
+  @media(max-width:480px){.header-sub{left:26.5%;top:54%;width:37%;min-height:25%;padding:4px 6px;font-size:8px}.header-right{right:3.7%;top:22%;width:19.5%;height:55%}.race-count-label{font-size:7px}.race-count-num{font-size:clamp(22px,8vw,34px)}.tab-btn{font-size:9px}.form-grid{grid-template-columns:1fr}.record-row{align-items:flex-start}.detail-row{flex-direction:column}.detail-value{white-space:normal}.detail-history-row{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -155,7 +153,6 @@
 
 <div class="header">
   <h1 class="header-accessible-title">WRC Sauna MM · Sauna Rally Championship</h1>
-  <div class="header-brand" aria-hidden="true"><img src="./logo.png" alt=""></div>
   <div class="header-sub" hidden aria-hidden="true"><span class="status-dot online" id="statusDot"></span><span id="statusText">Ühendatud · live</span></div>
   <div class="header-right">
     <div id="raceCountDisplay" class="race-count" style="display: block;">

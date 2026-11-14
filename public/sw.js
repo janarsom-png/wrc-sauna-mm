@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wrc-sauna-mm-v4';
+const CACHE_NAME = 'wrc-sauna-mm-v3';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/logo.png', '/icon-192.png', '/icon-512.png', '/wrc-sauna-hero-clean.png'];
 
 self.addEventListener('install', (event) => {
